@@ -1,0 +1,38 @@
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is a roof inspection really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Our roof and exterior inspections are free, with no pressure to buy. We take photos of what we find and give you an honest answer on whether you need a repair, a new roof or nothing at all."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a new roof cost in Wisconsin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on your roof's size and pitch, how many old layers come off, and the material you pick. Because every roof is different, we don't quote prices over the phone. We measure your roof during a free inspection and give you a clear written estimate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with my insurance company?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We work with all insurance companies. If hail or wind damaged your roof, we document the damage with photos for your insurer and help you through each step of the claim."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you repair my roof instead of replacing it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Often, yes. If a repair will do the job, we'll tell you. We only recommend a full replacement when the roof really needs it."
+        }
+      }
+    ]
+  }

@@ -1,0 +1,56 @@
+{
+    "@context": "https://schema.org",
+    "@type": "RoofingContractor",
+    "@id": "https://www.hardtlandhomeimprovement.com/#business",
+    "name": "Hardtland Home Improvement, Inc.",
+    "url": "https://www.hardtlandhomeimprovement.com/",
+    "logo": "https://www.hardtlandhomeimprovement.com/img/hardtland-logo.png",
+    "image": "https://www.hardtlandhomeimprovement.com/img/hero-roof-replacement-verona-1600.webp",
+    "telephone": "+1-608-575-9317",
+    "email": "tomd@tds.net",
+    "foundingDate": "1972",
+    "founder": {
+      "@type": "Person",
+      "name": "Tom Degenhardt"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "5821 Thrush Ln",
+      "addressLocality": "Madison",
+      "addressRegion": "WI",
+      "postalCode": "53711",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 43.0295,
+      "longitude": -89.4822
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Verona, WI" },
+      { "@type": "City", "name": "Madison, WI" },
+      { "@type": "City", "name": "Fitchburg, WI" },
+      { "@type": "City", "name": "Middleton, WI" },
+      { "@type": "City", "name": "Oregon, WI" },
+      { "@type": "City", "name": "Mount Horeb, WI" },
+      { "@type": "AdministrativeArea", "name": "Dane County, WI" },
+      { "@type": "AdministrativeArea", "name": "Green County, WI" },
+      { "@type": "AdministrativeArea", "name": "Rock County, WI" }
+    ],
+    "paymentAccepted": "Insurance, Personal Check, Cash, Zelle",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.7",
+      "reviewCount": "32",
+      "bestRating": "5"
+    },
+    "hasCredential": [
+      { "@type": "EducationalOccupationalCredential", "name": "CertainTeed Master Shingler" },
+      { "@type": "EducationalOccupationalCredential", "name": "Owens Corning Certified" }
+    ],
+    "sameAs": [
+      "[GOOGLE BUSINESS PROFILE URL]",
+      "[FACEBOOK PAGE URL]",
+      "[YELP PAGE URL]"
+    ]
+  }

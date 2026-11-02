@@ -58,4 +58,23 @@
       closeNav();
     }
   });
+  // Gallery filter (gallery page only). Without JS every photo shows.
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var grid = document.getElementById('gallery-grid');
+  var status = document.getElementById('gallery-status');
+  if (filterBtns.length && grid) {
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var f = btn.getAttribute('data-filter');
+        var shown = 0;
+        filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        grid.querySelectorAll('li[data-cat]').forEach(function (li) {
+          var match = f === 'all' || li.getAttribute('data-cat') === f;
+          li.hidden = !match;
+          if (match) shown++;
+        });
+        if (status) status.textContent = 'Showing ' + shown + ' projects';
+      });
+    });
+  }
 })();
