@@ -99,22 +99,33 @@ into `data/`, or the rebuild will put back the old hours and rating.
 
 ## Photos
 
-Every image in `/img/` is currently a grey **PHOTO PLACEHOLDER**. To add a real
-photo, save it as WebP with the **same file name** and drop it into `/img/`.
-The build never overwrites a real photo. Captions and alt text live in the
-build files; update a caption if the real job's town or type differs.
+`/img/` holds 29 real job photos, the van and trailer, and the real logo, all
+taken from Tom's old website gallery (converted to WebP, with location data
+removed). The old site had **no captions**, so captions and alt text describe
+only what is visible ("Two-story home, gray siding").
 
-Quick list of all placeholder names: `ls img/`
+To label a photo once Tom confirms it, edit `CONFIRMED` in `build/photos.py`:
+
+```python
+CONFIRMED = {"tearoff": ("Roof replacement", "Verona", "roofing")}
+```
+
+and rebuild. The caption becomes "Roof replacement, Verona", the alt text gets
+the town, and the gallery filter buttons appear once photos have categories.
+
+Still placeholders: the two certification badges. Not used from the old site:
+promo banners, 3 stock-looking images, and the trailer close-up that shows the
+old (608) 845-9100 number.
 
 ## Before launch (search the code for `TODO` and `[`)
 
-- [ ] Real job photos (homepage, service pages, town pages, gallery, Tom photos)
-- [ ] Real jobs from Tom for each town page (`build/towns.py`)
+- [ ] Ask Tom the job type + town for each photo (`CONFIRMED` in `build/photos.py`), and for a photo of himself
+- [ ] Town-specific jobs for each town page (`build/towns.py`)
 - [ ] Real hours: enter in the admin under Business info
 - [ ] Origin story on the About page (`[CONFIRMED STORY FROM TOM]` in `build/pages.py`)
 - [ ] Set `ADMIN_SETUP_KEY`, create the admin login, set up SMTP and send a test email
-- [ ] Google, Facebook, Yelp links and the direct Google review link: admin, Business info
-- [ ] Logo file, CertainTeed and Owens Corning badge files
+- [ ] Google Business Profile link and the direct Google review link: admin, Business info (Facebook + Yelp done)
+- [ ] CertainTeed and Owens Corning badge files (logo is in `img/hardtland-logo.png`)
 - [ ] Full review text from Google (currently excerpts) in `build/common.py`
 - [ ] Confirm domain (`DOMAIN` in `build/common.py`) and set up 301s from old URLs
 - [ ] Optional: replace `/img/og-hardtland.jpg` with a branded version using a real job photo (1200x630)

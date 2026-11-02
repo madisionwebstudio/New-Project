@@ -6,6 +6,7 @@ stay identical everywhere. Run `python3 build/build.py` after any edit.
 """
 import html
 import json
+import os
 
 DOMAIN = "https://www.hardtlandhomeimprovement.com"
 PHONE = "(608) 575-9317"
@@ -103,7 +104,18 @@ def ld(obj):
 PHOTOS = {}
 
 
-def photo(file, alt, w=800, h=600, lazy=True, cls=""):
+def photo(file, alt, w=None, h=None, lazy=True, cls=""):
+    """<img> with real width/height (read from the file in /img/ when present)."""
+    if w is None or h is None:
+        w, h = 800, 600
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "img", file)
+        if os.path.exists(path):
+            try:
+                from PIL import Image
+                with Image.open(path) as im:
+                    w, h = im.size
+            except Exception:
+                pass
     PHOTOS[file] = (w, h)
     loading = ' loading="lazy"' if lazy else ' fetchpriority="high"'
     c = f' class="{cls}"' if cls else ""
@@ -513,8 +525,7 @@ def project_grid(items):
 
 def projects_section(items, title, lead="Real Hardtland jobs. No stock photos.", band=True):
     cls = "section section--sand" if band else "section"
-    return f"""<!-- PHOTOS NEEDED: real job photos from Tom. Confirm town + job for each caption. -->
-  <section class="{cls}" aria-labelledby="projects-title">
+    return f"""<section class="{cls}" aria-labelledby="projects-title">
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Recent work</p>

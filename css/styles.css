@@ -674,7 +674,7 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.25rem; }
 .why__photo img {
   width: 100%;
   border-radius: var(--radius);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 .why__badge {

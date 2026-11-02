@@ -5,6 +5,7 @@ TODO before launch:
   * Replace each town's 3 projects with REAL JOBS FROM TOM (photo + one line).
   * Double-check the drive distances from 5821 Thrush Ln.
 """
+from photos import project
 from common import (DOMAIN, BUSINESS_ID, esc, icon, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                     faq_section, faq_ld, project_grid, form_band, map_embed,
                     review_cards, SERVICES, SERVICE_ICON, TOWNS, TEL, PHONE)
@@ -21,11 +22,7 @@ TOWN_DATA = {
         homes="""<p>Many Verona homes were built in the same few decades, which means whole neighborhoods often reach roof-replacement age around the same time. If your neighbors are getting new roofs, it's a good time to have yours checked.</p>
         <p>Newer Verona homes often have architectural shingles and more complex rooflines, with valleys, dormers and multiple pitches. Those details need careful flashing to stay dry. Older homes may have more than one layer of shingles that need to come off before a new roof goes on.</p>""",
         storm="""<p>Verona sits right in the path of the storms that sweep east across southern Wisconsin in spring and summer. Hail and high wind can lift shingles and bruise them in ways you can't see from the ground. After a storm, call or text Tom for a free inspection. We'll photograph any damage and help with your insurance claim.</p>""",
-        projects=[
-            ("roof-replacement-verona-1.webp", "Completed asphalt shingle roof replacement on a ranch home in Verona, WI", "<strong>Roof replacement</strong>, Verona"),
-            ("storm-damage-roof-verona-1.webp", "Roof replaced after a hailstorm on a home in Verona, WI", "<strong>Hail damage roof</strong>, Verona"),
-            ("gutters-verona-1.webp", "New seamless gutters and downspouts on a home in Verona, WI", "<strong>Seamless gutters</strong>, Verona"),
-        ],
+        projects=[project("gray2b"), project("ranchbeige"), project("yellow")],
         faqs=[
             ("How quickly can you get to my home in Verona?",
              "We're based about 6 miles away in southwest Madison, so Verona is close to home for us. Call or text Tom and we'll set up a time that works for you."),
@@ -47,11 +44,7 @@ TOWN_DATA = {
         homes="""<p>Madison has one of the widest ranges of homes in the area. Older neighborhoods have homes with steep roofs, dormers, chimneys and sometimes several layers of old shingles. Ranches and split-levels from the middle of the last century are common on the west and south sides. Newer homes on the edges of the city tend to have larger, more complex roofs.</p>
         <p>Older homes often need more care at the roof deck and around chimneys. We check the wood, replace soft boards and install new flashing, so the new roof has a solid base. Mature trees in many Madison neighborhoods also mean more clogged gutters, so we often pair roofs with <a href="/gutters/">gutter guards</a>.</p>""",
         storm="""<p>Spring and summer storms can bring hail and strong wind to Madison, and heavy winter snow leads to ice dams on many older homes. After a storm, a free inspection will tell you whether you have damage worth an insurance claim. If you have ice dams, we'll look at ventilation and insulation, not just the shingles.</p>""",
-        projects=[
-            ("roof-replacement-madison-2.webp", "New architectural shingle roof on a two-story home in Madison, WI", "<strong>Roof replacement</strong>, Madison"),
-            ("roof-repair-madison-1.webp", "Repaired section of shingle roof after a leak fix on a home in Madison, WI", "<strong>Roof repair</strong>, Madison"),
-            ("siding-fiber-cement-madison-1.webp", "Fiber cement siding installed on a home in Madison, WI", "<strong>Fiber cement siding</strong>, Madison"),
-        ],
+        projects=[project("cream"), project("ranchbrick"), project("pergola")],
         faqs=[
             ("Do you work all over Madison?",
              "Yes. We're based on the southwest side and work across the whole city, plus the towns around it."),
@@ -73,11 +66,7 @@ TOWN_DATA = {
         homes="""<p>Many Fitchburg homes are newer than those in central Madison, but the first roof on a home from the 1990s or early 2000s may be near the end of its life now. Those are often the roofs we're replacing in Fitchburg today.</p>
         <p>Homes on larger, more open lots get the full force of the wind. That can mean lifted shingles, loose ridge caps and damaged siding. We check for wind damage on every inspection and replace soffit, fascia or siding if it's needed, all with one crew.</p>""",
         storm="""<p>Open land around parts of Fitchburg means storms can hit hard, with nothing to slow the wind. After hail or a big wind event, have your roof, siding and gutters checked. We'll document any damage with photos and help you work with your insurance company.</p>""",
-        projects=[
-            ("roof-replacement-fitchburg-1.webp", "Crew finishing a shingle roof replacement in Fitchburg, WI", "<strong>Roof replacement</strong>, Fitchburg"),
-            ("siding-replacement-fitchburg-1.webp", "New vinyl siding with fresh soffit and fascia on a home in Fitchburg, WI", "<strong>Siding replacement</strong>, Fitchburg"),
-            ("gutter-guards-fitchburg-1.webp", "Gutter guards installed on a home with tall trees in Fitchburg, WI", "<strong>Gutter guards</strong>, Fitchburg"),
-        ],
+        projects=[project("deck"), project("blue"), project("split")],
         faqs=[
             ("Is my Fitchburg home's roof old enough to replace?",
              "If your home is from the 1990s or early 2000s and still has its first roof, it's worth a free inspection. We'll tell you honestly how much life it has left."),
@@ -99,11 +88,7 @@ TOWN_DATA = {
         homes="""<p>Middleton has older homes close to downtown, mid-century ranches, and larger newer homes with complex rooflines. Bigger homes often have several roof planes, valleys, dormers and skylights. Each of those spots needs careful flashing to stay watertight.</p>
         <p>Many Middleton homes are surrounded by mature trees, especially near parks and green spaces. Trees mean shade, moss, and clogged gutters. We look for those problems during every inspection and can add <a href="/gutters/">gutter guards</a> to help.</p>""",
         storm="""<p>Storms crossing Dane County regularly bring hail and wind through Middleton. Large trees can also drop limbs on roofs during a storm. If a storm or a fallen branch has damaged your roof, call or text Tom. We'll check it for free and help with your insurance claim if you need one.</p>""",
-        projects=[
-            ("storm-damage-roof-middleton-1.webp", "New roof installed after hail damage on a two-story home in Middleton, WI", "<strong>Hail damage roof</strong>, Middleton"),
-            ("soffit-fascia-middleton-1.webp", "New soffit and fascia on a home in Middleton, WI", "<strong>Soffit &amp; fascia</strong>, Middleton"),
-            ("windows-middleton-1.webp", "Replacement windows with new exterior trim in Middleton, WI", "<strong>Windows &amp; trim</strong>, Middleton"),
-        ],
+        projects=[project("tudor"), project("whitearch"), project("brick2")],
         faqs=[
             ("Can you handle a large, complex roof?",
              "Yes. Multiple roof planes, valleys, dormers and skylights are common in Middleton. Careful flashing in those spots is where experience counts."),
@@ -125,11 +110,7 @@ TOWN_DATA = {
         homes="""<p>Older homes near downtown Oregon often have steeper roofs, chimneys and sometimes more than one layer of old shingles. Newer homes may still have their first roof, which may be getting close to replacement age.</p>
         <p>Rural properties around Oregon often have barns, sheds and garages too. Metal roofing is a popular choice for those buildings, and for homes where owners want a roof that sheds snow and lasts. See our <a href="/metal-roofing/">metal roofing</a> page.</p>""",
         storm="""<p>Southern Dane County gets its share of hail and strong wind, and open farmland around Oregon gives storms room to build. Wind damage often shows up as lifted shingles and loose siding. After a storm, we'll do a free inspection, take photos and help with your claim.</p>""",
-        projects=[
-            ("metal-roof-oregon-1.webp", "Standing seam metal roof installed on a home in Oregon, WI", "<strong>Metal roof</strong>, Oregon"),
-            ("storm-damage-siding-oregon-1.webp", "Siding replaced after wind damage on a home in Oregon, WI", "<strong>Wind damage siding</strong>, Oregon"),
-            ("roof-replacement-oregon-1.webp", "Shingle roof replacement on a home in Oregon, WI", "<strong>Roof replacement</strong>, Oregon"),
-        ],
+        projects=[project("brownlong"), project("bilevel"), project("sunroom")],
         faqs=[
             ("Do you roof garages and outbuildings around Oregon?",
              "Yes. Ask about garages, sheds and outbuildings when we come out. Metal is often a good fit for those."),
@@ -151,10 +132,7 @@ TOWN_DATA = {
         homes="""<p>Mount Horeb sits up on the ridge west of Madison, and homes on higher, open ground take more wind than homes in town. That means checking ridge caps, roof edges and siding carefully for wind damage.</p>
         <p>You'll find older homes near the historic downtown, newer neighborhoods on the edges of the village, and rural homes with outbuildings nearby. Many rural owners choose <a href="/metal-roofing/">metal roofing</a> for its long life and how well it sheds snow.</p>""",
         storm="""<p>Storms often build as they move across the hills west of Madison, and Mount Horeb can see strong wind and hail. Winter brings heavy snow and ice dams. After any big storm, call or text Tom for a free inspection and help with your insurance claim.</p>""",
-        projects=[
-            ("gutters-mount-horeb-1.webp", "Seamless gutters with leaf guards on a home in Mount Horeb, WI", "<strong>Gutters &amp; leaf guards</strong>, Mount Horeb"),
-            ("metal-roof-mount-horeb-1.webp", "Metal roof on a farmhouse-style home near Mount Horeb, WI", "<strong>Metal roof</strong>, Mount Horeb"),
-        ],
+        projects=[project("hill"), project("teal"), project("porch2")],
         faqs=[
             ("Do you travel to Mount Horeb for small repairs?",
              "Yes. Call or text Tom and tell us what's going on. We'll set up a time to come out."),
@@ -206,7 +184,8 @@ def town_page(slug):
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Local work</p>
-        <h2 id="projects-title">Recent Projects in {esc(name)}</h2>
+        <h2 id="projects-title">Recent Hardtland Projects</h2>
+        <p>Real jobs from our project gallery, no stock photos.</p>
       </div>
       {project_grid(d["projects"])}
     </div>

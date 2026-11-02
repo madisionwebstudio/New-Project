@@ -5,6 +5,8 @@ import json
 import os
 import re
 
+import photos
+
 from common import (DOMAIN, BUSINESS_ID, RATING, REVIEW_COUNT, ld, esc, icon, stars, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                     faq_section, faq_ld, review_cards, project_grid, form_band, form,
                     map_embed, photo, SERVICES, SERVICE_ICON, TOWNS, TEL, SMS, PHONE,
@@ -62,6 +64,9 @@ HOME_PRELOAD = (
 def home():
     main = open(os.path.join(HERE, "home_main.html")).read().strip()
     main = main.replace("{{HOME_FORM}}", form("/", None, "f"))
+    main = main.replace("{{HOME_PROJECTS}}", project_grid([photos.project(k) for k in
+                        ("gray2", "cream", "blue", "yellow", "tudor", "pergola")]))
+    main = main.replace("{{WHY_PHOTO}}", photo(photos.PHOTOS["trailer"]["file"], photos.PHOTOS["trailer"]["alt"]))
     faq = json.loads(open(os.path.join(HERE, "home_ld_faq.json")).read())
     # Business schema is written by inc/publish-cli.php from data/site.json
     business = ("\n  <!--biz:ld-->" + ld(json.loads(open(os.path.join(HERE, "home_ld_business.json")).read()))
@@ -210,8 +215,8 @@ def about():
         f"""<section class="section">
     <div class="container why">
       <div class="why__photo">
-        <!-- PHOTO NEEDED: Tom with the Hardtland trailer -->
-        {photo("tom-degenhardt-hardtland-trailer.webp", "Tom Degenhardt, owner of Hardtland Home Improvement, standing by the company trailer in Madison, WI", 720, 900)}
+        <!-- TODO: add a photo of Tom himself when available -->
+        {photo(photos.PHOTOS["van"]["file"], photos.PHOTOS["van"]["alt"])}
         <div class="why__badge"><strong>1972</strong><span>Year Tom started Hardtland</span></div>
       </div>
       <div class="prose">
@@ -276,20 +281,9 @@ def about():
 # ==========================================================================
 # GALLERY
 # ==========================================================================
-GALLERY = [
-    ("roofing", "roof-replacement-verona-1.webp", "Completed asphalt shingle roof replacement on a ranch home in Verona, WI", "<strong>Roof replacement</strong>, Verona"),
-    ("roofing", "roof-replacement-madison-2.webp", "New architectural shingle roof on a two-story home in Madison, WI", "<strong>Roof replacement</strong>, Madison"),
-    ("siding", "siding-replacement-fitchburg-1.webp", "New vinyl siding with fresh soffit and fascia on a home in Fitchburg, WI", "<strong>Siding replacement</strong>, Fitchburg"),
-    ("roofing", "storm-damage-roof-middleton-1.webp", "New roof installed after hail damage on a two-story home in Middleton, WI", "<strong>Hail damage roof</strong>, Middleton"),
-    ("roofing", "metal-roof-oregon-1.webp", "Standing seam metal roof installed on a home in Oregon, WI", "<strong>Metal roof</strong>, Oregon"),
-    ("gutters", "gutters-mount-horeb-1.webp", "Seamless gutters with leaf guards on a home in Mount Horeb, WI", "<strong>Gutters &amp; leaf guards</strong>, Mount Horeb"),
-    ("siding", "siding-fiber-cement-madison-1.webp", "Fiber cement siding installed on a home in Madison, WI", "<strong>Fiber cement siding</strong>, Madison"),
-    ("roofing", "roof-repair-madison-1.webp", "Repaired section of shingle roof after a leak fix on a home in Madison, WI", "<strong>Roof repair</strong>, Madison"),
-    ("gutters", "gutters-verona-1.webp", "New seamless gutters and downspouts on a home in Verona, WI", "<strong>Seamless gutters</strong>, Verona"),
-    ("siding", "soffit-fascia-middleton-1.webp", "New soffit and fascia on a home in Middleton, WI", "<strong>Soffit &amp; fascia</strong>, Middleton"),
-    ("windows", "windows-madison-1.webp", "New replacement windows on a home in Madison, WI", "<strong>Replacement windows</strong>, Madison"),
-    ("gutters", "gutter-guards-fitchburg-1.webp", "Gutter guards installed on a home with tall trees in Fitchburg, WI", "<strong>Gutter guards</strong>, Fitchburg"),
-]
+# Every real job photo, in the order they appear. Category drives the filter
+# buttons, which only show once photos are tagged (see build/photos.py).
+GALLERY = [(photos.PHOTOS[k].get("cat") or "", *photos.project(k)) for k, _n, _a, _c in photos.JOBS]
 
 
 @add
@@ -298,11 +292,13 @@ def gallery():
     trail = [("Home", "/"), ("Gallery", path)]
     filters = [("all", "All"), ("roofing", "Roofing"), ("siding", "Siding"),
                ("gutters", "Gutters"), ("windows", "Windows &amp; Doors")]
-    btns = "".join(
+    cats = {c for c, *_ in GALLERY if c}
+    filters = [f for f in filters if f[0] == "all" or f[0] in cats]
+    btns = "" if len(filters) < 3 else "".join(
         f'<button type="button" class="filter-btn" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{lbl}</button>'
         for k, lbl in filters)
     items = "\n".join(
-        f"""        <li data-cat="{cat}">
+        f"""        <li data-cat="{cat or 'all'}">
           <figure class="project">
             {photo(f, alt)}
             <figcaption>{icon("i-map-pin")}<span>{cap}</span></figcaption>
@@ -311,14 +307,13 @@ def gallery():
     main = "\n  ".join([
         breadcrumbs(trail),
         page_hero("Our Recent Projects",
-                  "Roofing and siding projects we've installed across Madison, Verona and Dane County. Every photo is a real Hardtland job.",
+                  "Roofing and siding projects from Hardtland's recent work around Madison, Verona and Dane County. Every photo is a real Hardtland job.",
                   eyebrow="Gallery"),
-        f"""<!-- PHOTOS NEEDED: swap in Tom's 20+ gallery photos and his Google photos.
-       Caption each with the job type and town. Add data-cat="roofing|siding|gutters|windows". -->
+        f"""<!-- Photos from Tom's old website gallery. Add job/town/category in build/photos.py. -->
   <section class="section" aria-labelledby="gallery-title">
     <div class="container">
       <h2 id="gallery-title" class="visually-hidden">Roofing &amp; siding project photos</h2>
-      <div class="filter-bar" role="group" aria-label="Filter projects">{btns}</div>
+      {f'<div class="filter-bar" role="group" aria-label="Filter projects">{btns}</div>' if btns else ""}
       <p class="visually-hidden" aria-live="polite" id="gallery-status"></p>
       <ul class="projects" id="gallery-grid">
 {items}

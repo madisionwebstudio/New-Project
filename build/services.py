@@ -2,6 +2,7 @@
 H1 > intro + button > what's included > signs > 4 steps > photos > reviews >
 FAQs > related services + towns > form band.
 """
+from photos import project
 from common import (esc, form, icon, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                   faq_section, faq_ld, reviews_section, projects_section,
                   steps_section, related_section, form_band, service_ld, TEL, PHONE)
@@ -148,11 +149,7 @@ def roof_replacement():
             "Your roof is getting old and your neighbors are replacing theirs",
         ]) + '<p>Not sure? Book a <a href="/free-roof-inspection/">free roof inspection</a>. If a <a href="/roof-repair/">repair</a> will do, we\'ll tell you.</p>', band=True),
         steps_section(STD_STEPS, title="Our Roof Replacement Process"),
-        projects_section([
-            ("roof-replacement-verona-1.webp", "Completed asphalt shingle roof replacement on a ranch home in Verona, WI", "<strong>Roof replacement</strong>, Verona"),
-            ("roof-replacement-madison-2.webp", "New architectural shingle roof on a two-story home in Madison, WI", "<strong>Roof replacement</strong>, Madison"),
-            ("roof-replacement-fitchburg-1.webp", "Crew finishing a shingle roof replacement in Fitchburg, WI", "<strong>Roof replacement</strong>, Fitchburg"),
-        ], "Recent Roof Replacements", band=False),
+        projects_section([project("tearoff"), project("brick2"), project("ranchgray")], "Recent Hardtland Projects", band=False),
         reviews_section(["teresa", "cherise"], title="What Homeowners Say About Their New Roof", band=True),
     ]
     return service_page(
@@ -216,11 +213,7 @@ def roof_repair():
             ("Fix it right", "We repair it with matching materials and seal it for Wisconsin weather.", "i-hammer"),
             ("Clean up", "We pick up every scrap and nail and check the repair with you.", "i-check-circle"),
         ], title="Our Roof Repair Process"),
-        projects_section([
-            ("roof-repair-madison-1.webp", "Repaired section of shingle roof after a leak fix on a home in Madison, WI", "<strong>Roof repair</strong>, Madison"),
-            ("roof-repair-flashing-verona-1.webp", "New chimney flashing installed during a roof repair in Verona, WI", "<strong>Flashing repair</strong>, Verona"),
-            ("roof-repair-fitchburg-1.webp", "Replaced wind-damaged shingles on a roof in Fitchburg, WI", "<strong>Shingle repair</strong>, Fitchburg"),
-        ], "Recent Roof Repairs", band=True),
+        projects_section([project("chimney"), project("bilevel"), project("brownlong")], "Recent Hardtland Projects", band=True),
         reviews_section(["charles", "sally"], title="Repair-First Advice Homeowners Trust"),
     ]
     return service_page(
@@ -292,11 +285,7 @@ def storm_hail():
             ("Claim help", "We help you through the claim, from the first call to the final check.", "i-file"),
             ("Repair + clean-up", "We fix or replace what's damaged and leave your yard clean.", "i-hammer"),
         ], title="Our Storm Damage Process"),
-        projects_section([
-            ("storm-damage-roof-middleton-1.webp", "New roof installed after hail damage on a two-story home in Middleton, WI", "<strong>Hail damage roof</strong>, Middleton"),
-            ("storm-damage-siding-oregon-1.webp", "Siding replaced after wind damage on a home in Oregon, WI", "<strong>Wind damage siding</strong>, Oregon"),
-            ("storm-damage-roof-verona-1.webp", "Roof replaced after a hailstorm on a home in Verona, WI", "<strong>Hail damage roof</strong>, Verona"),
-        ], "Recent Storm Repairs", band=True),
+        projects_section([project("whitearch"), project("colonial"), project("split")], "Recent Hardtland Projects", band=True),
         reviews_section(["teresa", "sally"], title="Neighbors Who Trusted Us After the Storm"),
     ]
     return service_page(
@@ -412,11 +401,7 @@ def metal_roofing():
             "You like the look of a metal roof on a farmhouse or modern home",
         ])),
         steps_section(STD_STEPS, title="Our Metal Roof Process"),
-        projects_section([
-            ("metal-roof-oregon-1.webp", "Standing seam metal roof installed on a home in Oregon, WI", "<strong>Metal roof</strong>, Oregon"),
-            ("metal-roof-mount-horeb-1.webp", "Metal roof on a farmhouse-style home near Mount Horeb, WI", "<strong>Metal roof</strong>, Mount Horeb"),
-            ("metal-roof-verona-1.webp", "Dark metal roof with snow guards on a home in Verona, WI", "<strong>Metal roof</strong>, Verona"),
-        ], "Recent Metal Roofs", band=True),
+        projects_section([project("tudor"), project("sunroom"), project("porch2")], "Recent Hardtland Projects", band=True),
         reviews_section(["cherise", "sally"], title="What Customers Say"),
     ]
     return service_page(
@@ -539,11 +524,7 @@ def siding():
             "Hail or wind damage after a storm",
         ]), band=True),
         steps_section(STD_STEPS, title="Our Siding Process"),
-        projects_section([
-            ("siding-replacement-fitchburg-1.webp", "New vinyl siding with fresh soffit and fascia on a home in Fitchburg, WI", "<strong>Siding replacement</strong>, Fitchburg"),
-            ("siding-fiber-cement-madison-1.webp", "Fiber cement siding installed on a home in Madison, WI", "<strong>Fiber cement siding</strong>, Madison"),
-            ("soffit-fascia-middleton-1.webp", "New soffit and fascia on a home in Middleton, WI", "<strong>Soffit &amp; fascia</strong>, Middleton"),
-        ], "Recent Siding Projects", band=True),
+        projects_section([project("gray2"), project("tan2"), project("graybay")], "Recent Hardtland Projects", band=True),
         reviews_section(["sally", "cherise"], title="What Customers Say"),
     ]
     return service_page(
@@ -603,11 +584,7 @@ def gutters():
             "Plants growing in your gutters",
         ])),
         steps_section(STD_STEPS, title="Our Gutter Process"),
-        projects_section([
-            ("gutters-mount-horeb-1.webp", "Seamless gutters with leaf guards on a home in Mount Horeb, WI", "<strong>Gutters &amp; leaf guards</strong>, Mount Horeb"),
-            ("gutters-verona-1.webp", "New seamless gutters and downspouts on a home in Verona, WI", "<strong>Seamless gutters</strong>, Verona"),
-            ("gutter-guards-fitchburg-1.webp", "Gutter guards installed on a home with tall trees in Fitchburg, WI", "<strong>Gutter guards</strong>, Fitchburg"),
-        ], "Recent Gutter Projects", band=True),
+        projects_section([project("teal"), project("bungalow"), project("hill")], "Recent Hardtland Projects", band=True),
         reviews_section(["sally", "cherise"], title="What Customers Say"),
     ]
     return service_page(
@@ -676,11 +653,7 @@ def windows_doors():
             ("Professional install", "We remove the old units and install, flash and seal the new ones.", "i-hammer"),
             ("Clean-up + walk-through", "We clean up and check every window and door with you.", "i-check-circle"),
         ], title="Our Window & Door Process"),
-        projects_section([
-            ("windows-madison-1.webp", "New replacement windows on a home in Madison, WI", "<strong>Replacement windows</strong>, Madison"),
-            ("entry-door-verona-1.webp", "New front entry door installed on a home in Verona, WI", "<strong>Entry door</strong>, Verona"),
-            ("windows-middleton-1.webp", "Replacement windows with new exterior trim in Middleton, WI", "<strong>Windows &amp; trim</strong>, Middleton"),
-        ], "Recent Window & Door Projects", band=True),
+        projects_section([project("backwhite"), project("backdeck"), project("stone2")], "Recent Hardtland Projects", band=True),
         reviews_section(["cherise", "sally"], title="What Customers Say"),
     ]
     return service_page(
