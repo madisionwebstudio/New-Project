@@ -198,6 +198,7 @@
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<!--biz:notice--><!--/biz:notice-->
 <header class="site-header">
   <div class="container header-inner">
     <!-- TODO: replace the heart + wordmark with Tom's high-res logo file -->
@@ -279,7 +280,7 @@
         <ul class="chips" aria-label="Why Hardtland">
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-calendar"/></svg>Since 1972</li>
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-award"/></svg>CertainTeed Master Shingler</li>
-          <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-star"/></svg>4.7 Google (32 reviews)</li>
+          <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-star"/></svg><!--biz:rating-->4.7<!--/biz:rating--> Google (<!--biz:reviews-->32<!--/biz:reviews--> reviews)</li>
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-user-check"/></svg>Owner on every job</li>
         </ul>
       </div>
@@ -288,9 +289,10 @@
   <section class="section">
     <div class="container split">
       <div class="prose"><h2>What You Get With a Free Roof Inspection</h2><ul class="check-list"><li>A careful look at shingles, flashing, vents and roof edges</li><li>A check for hail, wind and ice damage</li><li>An attic check for leaks, when we can get in</li><li>A look at gutters, siding, soffit and fascia while we're there</li><li>Photos of what we find</li><li>An honest repair-or-replace answer, or "you're all set"</li></ul><p>Our free roof inspections in Madison and Verona come with no pressure. Tom Degenhardt has run Hardtland since 1972, and we'd rather tell you the truth than make a sale.</p></div>
-      <aside class="split__aside"><div class="form-card form-card--inline"><h3>Book Your Free Inspection</h3><p>Tom or the crew will call you back within 1 business day.</p><!-- TODO: set action to the real form handler; it should email tomd@tds.net -->
-        <form action="[FORM HANDLER URL]" method="post">
+      <aside class="split__aside"><div class="form-card form-card--inline"><h3>Book Your Free Inspection</h3><p>Tom or the crew will call you back within 1 business day.</p><!-- Saved to the admin panel (/admin/) and emailed. See lead.php. -->
+        <form action="/lead.php" method="post" data-lead-form>
           <input type="hidden" name="source_page" value="/free-roof-inspection/">
+          <input type="hidden" name="ts" value="">
           <div class="field">
             <label for="fi-name">Your name</label>
             <input id="fi-name" name="name" type="text" autocomplete="name" required>
@@ -322,6 +324,7 @@
             <label for="fi-website">Leave this field empty</label>
             <input id="fi-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <p class="form-status" role="alert" aria-live="assertive"></p>
           <button class="btn btn--primary btn--block" type="submit">Book My Free Inspection</button>
           <p class="form-promise">
             <svg class="icon icon-sm" aria-hidden="true"><use href="#i-clock"/></svg>
@@ -417,8 +420,8 @@
         <p class="eyebrow">Reviews</p>
         <h2 id="reviews-title">Honest Advice, From Real Customers</h2>
         <div class="rating-summary">
-          <span class="rating-summary__score">4.7</span><span class="trust-stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
-          <span>4.7 out of 5 stars on Google, from 32 reviews</span>
+          <span class="rating-summary__score"><!--biz:rating-->4.7<!--/biz:rating--></span><span class="trust-stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
+          <span><!--biz:rating-->4.7<!--/biz:rating--> out of 5 stars on Google, from <!--biz:reviews-->32<!--/biz:reviews--> reviews</span>
         </div>
       </div>
       <div class="grid grid--3">
@@ -515,9 +518,10 @@
       <div class="form-card">
         <h3>Book a Free Inspection</h3>
         <p>Takes about 30 seconds.</p>
-        <!-- TODO: set action to the real form handler; it should email tomd@tds.net -->
-        <form action="[FORM HANDLER URL]" method="post">
+        <!-- Saved to the admin panel (/admin/) and emailed. See lead.php. -->
+        <form action="/lead.php" method="post" data-lead-form>
           <input type="hidden" name="source_page" value="/free-roof-inspection/">
+          <input type="hidden" name="ts" value="">
           <div class="field">
             <label for="f-name">Your name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -549,6 +553,7 @@
             <label for="f-website">Leave this field empty</label>
             <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <p class="form-status" role="alert" aria-live="assertive"></p>
           <button class="btn btn--primary btn--block" type="submit">Book My Free Inspection</button>
           <p class="form-promise">
             <svg class="icon icon-sm" aria-hidden="true"><use href="#i-clock"/></svg>
@@ -575,8 +580,7 @@
         <div><svg class="icon" aria-hidden="true"><use href="#i-map-pin"/></svg><span>5821 Thrush Ln<br>Madison, WI 53711</span></div>
         <a href="tel:+16085759317"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>(608) 575-9317 (call or text)</a>
         <a href="mailto:tomd@tds.net"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>tomd@tds.net</a>
-        <!-- TODO: real hours from Tom -->
-        <div><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>[REAL HOURS FROM TOM]</span></div>
+        <div><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><!--biz:hours--><span class="hours"><span class="hours-note">[REAL HOURS FROM TOM]</span></span><!--/biz:hours--></div>
       </address>
     </div>
 
@@ -619,7 +623,7 @@
       <!-- TODO: replace with the direct "write a review" link for the Google profile -->
       <a class="footer-review" href="https://www.google.com/maps/search/?api=1&amp;query=Hardtland+Home+Improvement+Inc+5821+Thrush+Ln+Madison+WI" target="_blank" rel="noopener">
         <span class="trust-stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
-        4.7 on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
+        <!--biz:rating-->4.7<!--/biz:rating--> on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
       </a>
     </div>
   </div>

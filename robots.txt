@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /build/
+Disallow: /admin/
+Disallow: /thank-you/
 
 Sitemap: https://www.hardtlandhomeimprovement.com/sitemap.xml

@@ -88,6 +88,7 @@
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<!--biz:notice--><!--/biz:notice-->
 <header class="site-header">
   <div class="container header-inner">
     <!-- TODO: replace the heart + wordmark with Tom's high-res logo file -->
@@ -166,7 +167,7 @@
         <ul class="chips" aria-label="Why Hardtland">
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-calendar"/></svg>Since 1972</li>
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-award"/></svg>CertainTeed Master Shingler</li>
-          <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-star"/></svg>4.7 Google (32 reviews)</li>
+          <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-star"/></svg><!--biz:rating-->4.7<!--/biz:rating--> Google (<!--biz:reviews-->32<!--/biz:reviews--> reviews)</li>
           <li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-user-check"/></svg>Owner on every job</li>
         </ul>
       </div>
@@ -177,9 +178,10 @@
       <div class="form-card form-card--inline">
         <h2 class="h3-like">Book a Free Inspection</h2>
         <p>Takes about 30 seconds.</p>
-        <!-- TODO: set action to the real form handler; it should email tomd@tds.net -->
-        <form action="[FORM HANDLER URL]" method="post">
+        <!-- Saved to the admin panel (/admin/) and emailed. See lead.php. -->
+        <form action="/lead.php" method="post" data-lead-form>
           <input type="hidden" name="source_page" value="/contact/">
+          <input type="hidden" name="ts" value="">
           <div class="field">
             <label for="c-name">Your name</label>
             <input id="c-name" name="name" type="text" autocomplete="name" required>
@@ -211,6 +213,7 @@
             <label for="c-website">Leave this field empty</label>
             <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <p class="form-status" role="alert" aria-live="assertive"></p>
           <button class="btn btn--primary btn--block" type="submit">Book My Free Inspection</button>
           <p class="form-promise">
             <svg class="icon icon-sm" aria-hidden="true"><use href="#i-clock"/></svg>
@@ -225,7 +228,7 @@
           <li><svg class="icon" aria-hidden="true"><use href="#i-message"/></svg><div><strong>Text Tom</strong><a href="sms:+16085759317">(608) 575-9317</a></div></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><div><strong>Email</strong><a href="mailto:tomd@tds.net">tomd@tds.net</a></div></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-map-pin"/></svg><div><strong>Address</strong><span>5821 Thrush Ln<br>Madison, WI 53711</span></div></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><div><strong>Hours</strong><span>[REAL HOURS FROM TOM]</span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><div><strong>Hours</strong><span><!--biz:hours--><span class="hours"><span class="hours-note">[REAL HOURS FROM TOM]</span></span><!--/biz:hours--></span></div></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-wallet"/></svg><div><strong>Payment</strong><span>Insurance, personal checks, cash and Zelle</span></div></li>
         </ul>
       </div>
@@ -259,8 +262,7 @@
         <div><svg class="icon" aria-hidden="true"><use href="#i-map-pin"/></svg><span>5821 Thrush Ln<br>Madison, WI 53711</span></div>
         <a href="tel:+16085759317"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>(608) 575-9317 (call or text)</a>
         <a href="mailto:tomd@tds.net"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>tomd@tds.net</a>
-        <!-- TODO: real hours from Tom -->
-        <div><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>[REAL HOURS FROM TOM]</span></div>
+        <div><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><!--biz:hours--><span class="hours"><span class="hours-note">[REAL HOURS FROM TOM]</span></span><!--/biz:hours--></div>
       </address>
     </div>
 
@@ -303,7 +305,7 @@
       <!-- TODO: replace with the direct "write a review" link for the Google profile -->
       <a class="footer-review" href="https://www.google.com/maps/search/?api=1&amp;query=Hardtland+Home+Improvement+Inc+5821+Thrush+Ln+Madison+WI" target="_blank" rel="noopener">
         <span class="trust-stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
-        4.7 on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
+        <!--biz:rating-->4.7<!--/biz:rating--> on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
       </a>
     </div>
   </div>

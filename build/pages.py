@@ -3,7 +3,7 @@ FAQ, contact, privacy, accessibility and 404."""
 import json
 import os
 
-from common import (esc, icon, stars, url, render, breadcrumbs, breadcrumb_ld, page_hero,
+from common import (RATING, REVIEW_COUNT, ld, esc, icon, stars, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                     faq_section, faq_ld, review_cards, project_grid, form_band, form,
                     map_embed, photo, SERVICES, SERVICE_ICON, TOWNS, TEL, SMS, PHONE,
                     EMAIL, HOURS, GOOGLE_REVIEWS)
@@ -36,12 +36,15 @@ HOME_PRELOAD = (
 @add
 def home():
     main = open(os.path.join(HERE, "home_main.html")).read().strip()
-    business = json.loads(open(os.path.join(HERE, "home_ld_business.json")).read())
+    main = main.replace("{{HOME_FORM}}", form("/", None, "f"))
     faq = json.loads(open(os.path.join(HERE, "home_ld_faq.json")).read())
+    # Business schema is written by inc/publish-cli.php from data/site.json
+    business = ("\n  <!--biz:ld-->" + ld(json.loads(open(os.path.join(HERE, "home_ld_business.json")).read()))
+                + "<!--/biz:ld-->")
     return "/", render(
         "/", "Roofing Contractor Madison & Verona WI | Hardtland Since 1972",
         "Family roofer serving Madison, Verona and Dane County since 1972. CertainTeed Master Shingler. Free roof inspections and insurance claim help.",
-        main, schemas=[business, faq], preload_html=HOME_PRELOAD,
+        main, schemas=[faq], preload_html=HOME_PRELOAD, head_html=business,
         og_title="Madison & Verona's Roofer Since 1972 | Hardtland Home Improvement")
 
 
@@ -117,7 +120,7 @@ def reviews():
     main = "\n  ".join([
         breadcrumbs(trail),
         page_hero("What Our Customers Say",
-                  "Hardtland Home Improvement reviews from homeowners in Madison, Verona and nearby. We're rated 4.7 out of 5 stars on Google from 32 reviews.",
+                  "Hardtland Home Improvement reviews from homeowners in Madison, Verona and nearby. We're rated {{RATING}} out of 5 stars on Google from {{REVIEWS}} reviews.",
                   eyebrow="Reviews", cta_label="Leave Us a Review", cta_href=GOOGLE_REVIEWS),
         f"""<!-- Review text is word for word from Google. Replace excerpts with the full text before launch.
        Optional: add a lightweight Google review feed here later (avoid heavy widgets that slow the page). -->
@@ -126,8 +129,8 @@ def reviews():
       <div class="section-head">
         <h2 id="reviews-title">Hardtland Reviews From Real Homeowners</h2>
         <div class="rating-summary">
-          <span class="rating-summary__score">4.7</span>{stars()}
-          <span>4.7 out of 5 stars on Google, from 32 reviews</span>
+          <span class="rating-summary__score">{RATING}</span>{stars()}
+          <span>{RATING} out of 5 stars on Google, from {REVIEW_COUNT} reviews</span>
         </div>
       </div>
       <div class="grid grid--2">
@@ -490,6 +493,26 @@ def accessibility():
     return path, render(path, "Accessibility Statement | Hardtland Home Improvement",
                         "Hardtland's commitment to an accessible website, and how to reach us if you need help.",
                         main, schemas=[breadcrumb_ld(trail)])
+
+
+@add
+def thank_you():
+    path = "/thank-you/"
+    body = f"""<div class="prose">
+      <p>Tom or the crew will call you back within 1 business day to set up your free inspection.</p>
+      <p>Need us sooner? Call or text Tom at <a href="{TEL}">{PHONE}</a>.</p>
+      <h2 class="h3-like">While you wait</h2>
+      <ul class="link-list">
+        <li><a href="/reviews/">{icon("i-star")}Read what customers say</a></li>
+        <li><a href="/gallery/">{icon("i-camera")}See recent projects</a></li>
+        <li><a href="/storm-hail-damage/">{icon("i-hail")}What to do after a storm</a></li>
+      </ul>
+    </div>"""
+    main = "\n  ".join([page_hero("Thanks! We Got Your Request", "Your free inspection request is on its way to Tom.", buttons=False),
+                        simple_section(body)])
+    return path, render(path, "Thank You | Hardtland Home Improvement",
+                        "Thanks for requesting a free inspection from Hardtland Home Improvement.",
+                        main, robots="noindex")
 
 
 @add

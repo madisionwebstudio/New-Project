@@ -12,8 +12,13 @@ PHONE = "(608) 575-9317"
 TEL = "tel:+16085759317"
 SMS = "sms:+16085759317"
 EMAIL = "tomd@tds.net"
-HOURS = "[REAL HOURS FROM TOM]"
-FORM_ACTION = "[FORM HANDLER URL]"
+# Editable from the admin panel (data/site.json). The build writes these seed
+# values; inc/publish-cli.php then applies the current data/site.json.
+HOURS = ('<!--biz:hours--><span class="hours"><span class="hours-note">[REAL HOURS FROM TOM]'
+         '</span></span><!--/biz:hours-->')
+RATING = "{{RATING}}"      # becomes <!--biz:rating-->4.7<!--/biz:rating--> in the page body
+REVIEW_COUNT = "{{REVIEWS}}"
+FORM_ACTION = "/lead.php"
 GOOGLE_REVIEWS = ("https://www.google.com/maps/search/?api=1&amp;query="
                   "Hardtland+Home+Improvement+Inc+5821+Thrush+Ln+Madison+WI")
 BUSINESS_ID = DOMAIN + "/#business"
@@ -168,7 +173,8 @@ def header(current):
         for s in ROOFING_SLUGS)
     town_items = "\n".join(
         f'            <li><a href="{url(s)}"{cur(url(s))}>{esc(n)}</a></li>' for s, n in TOWNS)
-    return f"""<header class="site-header">
+    return f"""<!--biz:notice--><!--/biz:notice-->
+<header class="site-header">
   <div class="container header-inner">
     <!-- TODO: replace the heart + wordmark with Tom's high-res logo file -->
     <a class="logo" href="/" aria-label="Hardtland Home Improvement, home">
@@ -236,8 +242,7 @@ def footer():
         <div>{icon("i-map-pin")}<span>5821 Thrush Ln<br>Madison, WI 53711</span></div>
         <a href="{TEL}">{icon("i-phone")}{PHONE} (call or text)</a>
         <a href="mailto:{EMAIL}">{icon("i-mail")}{EMAIL}</a>
-        <!-- TODO: real hours from Tom -->
-        <div>{icon("i-clock")}<span>{HOURS}</span></div>
+        <div>{icon("i-clock")}{HOURS}</div>
       </address>
     </div>
 
@@ -267,7 +272,7 @@ def footer():
       <!-- TODO: replace with the direct "write a review" link for the Google profile -->
       <a class="footer-review" href="{GOOGLE_REVIEWS}" target="_blank" rel="noopener">
         {stars()}
-        4.7 on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
+        {RATING} on Google. Leave us a review<span class="visually-hidden"> (opens in a new tab)</span>
       </a>
     </div>
   </div>
@@ -335,9 +340,10 @@ def form(source, select=None, uid="f"):
                "Gutters", "Windows/doors", "Other"]
     opts = "\n".join(
         f'            <option{" selected" if o == select else ""}>{o}</option>' for o in options)
-    return f"""<!-- TODO: set action to the real form handler; it should email {EMAIL} -->
-        <form action="{FORM_ACTION}" method="post">
+    return f"""<!-- Saved to the admin panel (/admin/) and emailed. See lead.php. -->
+        <form action="{FORM_ACTION}" method="post" data-lead-form>
           <input type="hidden" name="source_page" value="{source}">
+          <input type="hidden" name="ts" value="">
           <div class="field">
             <label for="{uid}-name">Your name</label>
             <input id="{uid}-name" name="name" type="text" autocomplete="name" required>
@@ -363,6 +369,7 @@ def form(source, select=None, uid="f"):
             <label for="{uid}-website">Leave this field empty</label>
             <input id="{uid}-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <p class="form-status" role="alert" aria-live="assertive"></p>
           <button class="btn btn--primary btn--block" type="submit">Book My Free Inspection</button>
           <p class="form-promise">
             {icon("i-clock", "icon icon-sm")}
@@ -413,7 +420,7 @@ def page_hero(h1, lead, eyebrow=None, buttons=True, cta_label="Book a Free Inspe
         <ul class="chips" aria-label="Why Hardtland">
           <li>{icon("i-calendar", "icon icon-sm")}Since 1972</li>
           <li>{icon("i-award", "icon icon-sm")}CertainTeed Master Shingler</li>
-          <li>{icon("i-star", "icon icon-sm")}4.7 Google (32 reviews)</li>
+          <li>{icon("i-star", "icon icon-sm")}{RATING} Google ({REVIEW_COUNT} reviews)</li>
           <li>{icon("i-user-check", "icon icon-sm")}Owner on every job</li>
         </ul>
       </div>
@@ -480,8 +487,8 @@ def reviews_section(keys, title="What Customers Say", band=False):
         <p class="eyebrow">Reviews</p>
         <h2 id="reviews-title">{esc(title)}</h2>
         <div class="rating-summary">
-          <span class="rating-summary__score">4.7</span>{stars()}
-          <span>4.7 out of 5 stars on Google, from 32 reviews</span>
+          <span class="rating-summary__score">{RATING}</span>{stars()}
+          <span>{RATING} out of 5 stars on Google, from {REVIEW_COUNT} reviews</span>
         </div>
       </div>
       <div class="grid {grid}">
@@ -583,7 +590,7 @@ def map_embed(query, title, zoom=12):
 # Full page shell
 # --------------------------------------------------------------------------
 def render(path, title, description, main, current=None, schemas=(), preload=None,
-           og_title=None, robots=None, preload_html=None):
+           og_title=None, robots=None, preload_html=None, head_html=""):
     canonical = DOMAIN + path
     pre = ""
     if preload:
@@ -619,7 +626,7 @@ def render(path, title, description, main, current=None, schemas=(), preload=Non
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Oswald:wght@600;700&amp;display=swap">
   <link rel="stylesheet" href="/css/styles.css">
 
-  {ld_blocks}
+  {ld_blocks}{head_html}
 
   <script src="/js/main.js" defer></script>
 </head>

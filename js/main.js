@@ -77,4 +77,50 @@
       });
     });
   }
+  // Free inspection forms: send without leaving the page. Without JS (or if
+  // fetch fails to load) the form posts normally and lands on /thank-you/.
+  document.querySelectorAll('form[data-lead-form]').forEach(function (form) {
+    var ts = form.querySelector('input[name="ts"]');
+    if (ts) ts.value = String(Date.now());
+    if (!window.fetch || !window.FormData) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var status = form.querySelector('.form-status');
+      var label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      if (status) { status.textContent = ''; status.classList.remove('is-error'); }
+
+      function fail(msg) {
+        btn.disabled = false;
+        btn.textContent = label;
+        if (status) { status.textContent = msg; status.classList.add('is-error'); }
+      }
+
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'X-Requested-With': 'fetch' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (!d || !d.ok) return fail((d && d.error) || 'Sorry, something went wrong. Please call or text us.');
+          var done = document.createElement('div');
+          done.className = 'form-done';
+          done.setAttribute('role', 'status');
+          done.setAttribute('tabindex', '-1');
+          var h = document.createElement('p');
+          h.className = 'form-done__title';
+          h.textContent = 'Thanks' + (d.name ? ', ' + d.name.split(' ')[0] : '') + '! We got your request.';
+          var p = document.createElement('p');
+          p.textContent = 'Tom or the crew will call you back within 1 business day.';
+          done.appendChild(h);
+          done.appendChild(p);
+          form.replaceWith(done);
+          done.focus();
+          if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_page: location.pathname });
+        })
+        .catch(function () {
+          fail('We could not send your request. Please check your connection, or call or text us.');
+        });
+    });
+  });
 })();

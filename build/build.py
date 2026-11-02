@@ -24,7 +24,20 @@ import towns  # noqa: E402
 LASTMOD = "2026-11-02"
 
 
+SEED_RATING, SEED_REVIEWS = "4.7", "32"
+
+
+def fill_tokens(html):
+    """{{RATING}}/{{REVIEWS}}: plain text in <head>, editable markers in <body>."""
+    head, sep, body = html.partition("</head>")
+    head = head.replace("{{RATING}}", SEED_RATING).replace("{{REVIEWS}}", SEED_REVIEWS)
+    body = (body.replace("{{RATING}}", f"<!--biz:rating-->{SEED_RATING}<!--/biz:rating-->")
+                .replace("{{REVIEWS}}", f"<!--biz:reviews-->{SEED_REVIEWS}<!--/biz:reviews-->"))
+    return head + sep + body
+
+
 def write_page(path, html):
+    html = fill_tokens(html)
     if path.endswith(".html"):
         out = os.path.join(ROOT, path.lstrip("/"))
     else:
@@ -82,7 +95,7 @@ def main():
             print(f"  {path}")
 
     # sitemap + robots
-    urls = [p for p, h in built if not p.endswith(".html")]
+    urls = [p for p, h in built if not p.endswith(".html") and 'content="noindex' not in h]
     order = ["/"] + [common.url(s) for s, _ in common.SERVICES] + \
             [common.url(s) for s, _ in common.TOWNS]
     urls.sort(key=lambda u: (order.index(u) if u in order else len(order), u))
@@ -94,11 +107,18 @@ def main():
                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                 f"{entries}\n</urlset>\n")
     with open(os.path.join(ROOT, "robots.txt"), "w") as f:
-        f.write("User-agent: *\nAllow: /\nDisallow: /build/\n\n"
+        f.write("User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /thank-you/\n\n"
                 f"Sitemap: {common.DOMAIN}/sitemap.xml\n")
 
     made = make_placeholders([h for _, h in built])
     print(f"Built {len(built)} pages, {len(urls)} in sitemap, {len(made)} new placeholder images.")
+
+    # Apply the admin-editable business info (data/site.json) to the new pages.
+    import subprocess
+    try:
+        subprocess.run(["php", os.path.join(ROOT, "inc", "publish-cli.php")], check=True)
+    except (OSError, subprocess.CalledProcessError) as e:
+        print(f"WARNING: could not run php inc/publish-cli.php ({e}). Pages show seed values.")
 
 
 if __name__ == "__main__":

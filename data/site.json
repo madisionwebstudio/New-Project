@@ -1,0 +1,26 @@
+{
+    "phone": "(608) 575-9317",
+    "email": "tomd@tds.net",
+    "street": "5821 Thrush Ln",
+    "city": "Madison",
+    "state": "WI",
+    "zip": "53711",
+    "rating": "4.7",
+    "review_count": "32",
+    "google_review_url": "https://www.google.com/maps/search/?api=1&query=Hardtland+Home+Improvement+Inc+5821+Thrush+Ln+Madison+WI",
+    "hours": {
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null,
+        "sun": null
+    },
+    "hours_note": "[REAL HOURS FROM TOM]",
+    "google_profile_url": "",
+    "facebook_url": "",
+    "yelp_url": "",
+    "notice_text": "",
+    "notice_link": ""
+}

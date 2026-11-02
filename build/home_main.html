@@ -23,7 +23,7 @@
         <div class="hero__proof">
           <span>
             <svg class="icon icon-sm" aria-hidden="true"><use href="#i-star"/></svg>
-            4.7 on Google
+            {{RATING}} on Google
           </span>
           <span>Owner on every job</span>
           <span>Licensed, bonded &amp; insured</span>
@@ -40,7 +40,7 @@
           <span class="trust-stars" aria-hidden="true">
             <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
           </span>
-          <span>4.7 Google (32 reviews)</span>
+          <span>{{RATING}} Google ({{REVIEWS}} reviews)</span>
         </li>
         <li>
           <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
@@ -257,11 +257,11 @@
         <p class="eyebrow">Reviews</p>
         <h2 id="reviews-title">What Our Neighbors Say</h2>
         <div class="rating-summary">
-          <span class="rating-summary__score">4.7</span>
+          <span class="rating-summary__score">{{RATING}}</span>
           <span class="trust-stars" aria-hidden="true">
             <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
           </span>
-          <span>4.7 out of 5 stars on Google, from 32 reviews</span>
+          <span>{{RATING}} out of 5 stars on Google, from {{REVIEWS}} reviews</span>
         </div>
       </div>
 
@@ -443,50 +443,7 @@
         <h3>Book a Free Inspection</h3>
         <p>Takes about 30 seconds.</p>
 
-        <!-- TODO: set action to the real form handler; it should email tomd@tds.net -->
-        <form action="[FORM HANDLER URL]" method="post">
-          <input type="hidden" name="source_page" value="/">
-
-          <div class="field">
-            <label for="f-name">Your name</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
-            </div>
-            <div class="field">
-              <label for="f-need">What do you need?</label>
-              <select id="f-need" name="need" required>
-                <option value="">Choose one</option>
-                <option>Roof repair</option>
-                <option>Roof replacement</option>
-                <option>Storm/hail damage</option>
-                <option>Siding</option>
-                <option>Gutters</option>
-                <option>Windows/doors</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-address">Home address</label>
-            <input id="f-address" name="address" type="text" autocomplete="street-address" required>
-          </div>
-
-          <!-- Honeypot: people never see this; bots fill it in -->
-          <div class="hp-field" aria-hidden="true">
-            <label for="f-website">Leave this field empty</label>
-            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-
-          <button class="btn btn--primary btn--block" type="submit">Book My Free Inspection</button>
-          <p class="form-promise">
-            <svg class="icon icon-sm" aria-hidden="true"><use href="#i-clock"/></svg>
-            <span>Tom or the crew will call you back within 1 business day.</span>
-          </p>
-        </form>
+        {{HOME_FORM}}
       </div>
     </div>
   </section>
