@@ -1,99 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/hero-roof-replacement-verona-1600.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/tom-degenhardt-on-site-madison.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-replacement-fitchburg-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-mount-horeb-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/roof-replacement/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-madison-2.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-fitchburg-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/roof-repair/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-flashing-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-fitchburg-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/storm-hail-damage/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-siding-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-verona-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/insurance-claims/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/metal-roofing/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-mount-horeb-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-verona-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/free-roof-inspection/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/siding/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-replacement-fitchburg-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-fiber-cement-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/soffit-fascia-middleton-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/gutters/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-mount-horeb-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutter-guards-fitchburg-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/windows-doors/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/windows-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/entry-door-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/windows-middleton-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/verona-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-verona-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/madison-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-madison-2.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-fiber-cement-madison-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/fitchburg-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-fitchburg-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-replacement-fitchburg-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutter-guards-fitchburg-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/middleton-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/soffit-fascia-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/windows-middleton-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/oregon-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-siding-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-oregon-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/mount-horeb-wi/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-mount-horeb-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-mount-horeb-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/about/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/tom-degenhardt-hardtland-trailer.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/accessibility/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/contact/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/faq/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/gallery/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-replacement-madison-2.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-replacement-fitchburg-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/storm-damage-roof-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/metal-roof-oregon-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-mount-horeb-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/siding-fiber-cement-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/roof-repair-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutters-verona-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/soffit-fascia-middleton-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/windows-madison-1.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.hardtlandhomeimprovement.com/img/gutter-guards-fitchburg-1.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/privacy-policy/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/reviews/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hardtlandhomeimprovement.com/service-areas/</loc>
     <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>

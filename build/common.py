@@ -589,9 +589,37 @@ def map_embed(query, title, zoom=12):
 # --------------------------------------------------------------------------
 # Full page shell
 # --------------------------------------------------------------------------
+PAGE_TYPES = {"/about/": "AboutPage", "/contact/": "ContactPage", "/gallery/": "ImageGallery",
+              "/service-areas/": "CollectionPage"}
+FONTS = ("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;"
+         "family=Oswald:wght@600;700&amp;display=swap")
+
+
+def webpage_ld(path, title, description, page_type="WebPage", extra=None):
+    """WebPage node tying every page to the site and the business."""
+    obj = {
+        "@context": "https://schema.org",
+        "@type": page_type,
+        "@id": DOMAIN + path + "#webpage",
+        "url": DOMAIN + path,
+        "name": html.unescape(title),
+        "description": html.unescape(description),
+        "inLanguage": "en-US",
+        "isPartOf": {"@id": DOMAIN + "/#website"},
+        "about": {"@id": BUSINESS_ID},
+        "publisher": {"@id": BUSINESS_ID},
+    }
+    if extra:
+        obj.update(extra)
+    return obj
+
+
 def render(path, title, description, main, current=None, schemas=(), preload=None,
-           og_title=None, robots=None, preload_html=None, head_html=""):
+           og_title=None, robots=None, preload_html=None, head_html="", page_extra=None):
     canonical = DOMAIN + path
+    indexable = robots is None
+    if indexable:
+        schemas = [webpage_ld(path, title, description, PAGE_TYPES.get(path, "WebPage"), page_extra)] + list(schemas)
     pre = ""
     if preload:
         pre = (f'\n  <link rel="preload" as="image" type="image/webp" href="{preload}" '
@@ -599,9 +627,10 @@ def render(path, title, description, main, current=None, schemas=(), preload=Non
     if preload_html:
         pre = "\n\n  <!-- Hero photo first: it is the largest thing on screen (LCP) -->\n  " + preload_html
     ld_blocks = "\n  ".join(ld(s) for s in schemas)
-    robots_meta = f'\n  <meta name="robots" content="{robots}">' if robots else ""
+    robots_meta = (f'\n  <meta name="robots" content="{robots}">' if robots else
+                   '\n  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">')
     return f"""<!doctype html>
-<html lang="en" class="no-js">
+<html lang="en-US" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -609,6 +638,11 @@ def render(path, title, description, main, current=None, schemas=(), preload=Non
   <meta name="description" content="{esc(description)}">{robots_meta}
   <link rel="canonical" href="{canonical}">
   <meta name="theme-color" content="#1F2328">
+  <meta name="geo.region" content="US-WI">
+  <meta name="geo.placename" content="Madison">
+  <meta name="geo.position" content="43.0295;-89.4822">
+  <meta name="ICBM" content="43.0295, -89.4822">
+  <!--biz:tracking--><!--/biz:tracking-->
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Hardtland Home Improvement, Inc.">
@@ -616,14 +650,26 @@ def render(path, title, description, main, current=None, schemas=(), preload=Non
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{DOMAIN}/img/og-hardtland.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hardtland Home Improvement, Madison and Verona roofer since 1972">
   <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{esc(og_title or title)}">
+  <meta name="twitter:description" content="{esc(description)}">
+  <meta name="twitter:image" content="{DOMAIN}/img/og-hardtland.jpg">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>{pre}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Oswald:wght@600;700&amp;display=swap">
+  <!-- Fonts load without blocking the first paint -->
+  <link rel="preload" as="style" href="{FONTS}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{FONTS}"></noscript>
   <link rel="stylesheet" href="/css/styles.css">
 
   {ld_blocks}{head_html}
@@ -657,20 +703,8 @@ def service_ld(name, slug, description, service_type=None):
         "serviceType": service_type or name,
         "description": description,
         "url": DOMAIN + url(slug),
-        "provider": {
-            "@type": "RoofingContractor",
-            "@id": BUSINESS_ID,
-            "name": "Hardtland Home Improvement, Inc.",
-            "telephone": "+1-608-575-9317",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "5821 Thrush Ln",
-                "addressLocality": "Madison",
-                "addressRegion": "WI",
-                "postalCode": "53711",
-                "addressCountry": "US",
-            },
-        },
+        "provider": {"@id": BUSINESS_ID, "@type": "RoofingContractor",
+                     "name": "Hardtland Home Improvement, Inc."},
         "areaServed": [{"@type": "City", "name": f"{n}, WI"} for _, n in TOWNS]
         + [{"@type": "AdministrativeArea", "name": c}
            for c in ("Dane County, WI", "Green County, WI", "Rock County, WI")],

@@ -89,6 +89,9 @@ function site_defaults(): array
         'yelp_url' => '',
         'notice_text' => '',
         'notice_link' => '',
+        'ga4_id' => '',              // Google Analytics 4, e.g. G-ABC123XYZ
+        'gsc_verification' => '',    // Google Search Console HTML-tag code
+        'bing_verification' => '',   // Bing Webmaster Tools code
     ];
 }
 
@@ -431,6 +434,31 @@ function render_business_ld(array $site): string
             array_map(fn($c) => ['@type' => 'AdministrativeArea', 'name' => "$c County, WI"], ['Dane', 'Green', 'Rock'])
         ),
         'paymentAccepted' => 'Insurance, Personal Check, Cash, Zelle',
+        'currenciesAccepted' => 'USD',
+        'slogan' => "Madison & Verona's Roofer Since 1972",
+        'hasMap' => 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(BIZ_NAME . ', ' . $site['street'] . ', ' . $site['city'] . ', ' . $site['state'] . ' ' . $site['zip']),
+        'contactPoint' => [
+            '@type' => 'ContactPoint',
+            'contactType' => 'customer service',
+            'telephone' => $p['ld'] ?: $site['phone'],
+            'email' => $site['email'],
+            'areaServed' => 'US-WI',
+            'availableLanguage' => 'English',
+        ],
+        'knowsAbout' => ['Roof replacement', 'Roof repair', 'Hail and storm damage', 'Roof insurance claims',
+                         'Metal roofing', 'Siding', 'Soffit and fascia', 'Gutters and gutter guards',
+                         'Window and door replacement'],
+        'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Roofing and exterior services',
+            'itemListElement' => array_map(fn($svc) => ['@type' => 'Offer', 'itemOffered' => [
+                '@type' => 'Service', 'name' => $svc[1], 'url' => SITE_URL . '/' . $svc[0] . '/']], [
+                ['roof-replacement', 'Roof Replacement'], ['roof-repair', 'Roof Repair'],
+                ['storm-hail-damage', 'Storm & Hail Damage Repair'], ['insurance-claims', 'Roof Insurance Claim Help'],
+                ['metal-roofing', 'Metal Roofing'], ['free-roof-inspection', 'Free Roof Inspection'],
+                ['siding', 'Siding'], ['gutters', 'Gutters & Gutter Guards'], ['windows-doors', 'Window & Door Replacement'],
+            ]),
+        ],
     ];
     if (hours_are_set($site)) {
         $groups = [];
@@ -457,9 +485,24 @@ function render_business_ld(array $site): string
     return "<script type=\"application/ld+json\">\n$json\n</script>";
 }
 
+function render_tracking(array $site): string
+{
+    $out = '';
+    if ($site['gsc_verification'] !== '') $out .= '<meta name="google-site-verification" content="' . h($site['gsc_verification']) . '">';
+    if ($site['bing_verification'] !== '') $out .= '<meta name="msvalidate.01" content="' . h($site['bing_verification']) . '">';
+    if ($site['ga4_id'] !== '') {
+        $id = h($site['ga4_id']);
+        $out .= '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $id . '"></script>'
+            . '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}'
+            . "gtag('js',new Date());gtag('config','" . $id . "');</script>";
+    }
+    return $out;
+}
+
 function rendered_blocks(array $site): array
 {
     return [
+        'tracking' => render_tracking($site),
         'hours' => render_hours($site),
         'notice' => render_notice($site),
         'ld' => render_business_ld($site),

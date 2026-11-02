@@ -1,12 +1,35 @@
 # Hardtland — Apache / LiteSpeed config
 Options -Indexes -MultiViews
 DirectoryIndex index.html index.php
+AddType application/manifest+json .webmanifest
+AddDefaultCharset utf-8
+AddCharset utf-8 .txt .xml
 ErrorDocument 404 /404.html
 RewriteEngine On
 
-# Force HTTPS (uncomment once SSL is live)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# ONE address for the whole site: https://www.hardtlandhomeimprovement.com
+# Uncomment these 3 lines once SSL is live. They send http:// and the bare
+# domain to https://www. in a single redirect (matches the canonical tags).
+# RewriteCond %{HTTPS} off [OR]
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^ https://www.hardtlandhomeimprovement.com%{REQUEST_URI} [L,R=301]
+
+# Old site URLs -> new pages (keeps any links and rankings they earned).
+# Case-sensitive on purpose: /Accessibility -> /accessibility/ must not loop.
+RewriteRule ^Accessibility/?$ /accessibility/ [R=301,L]
+RewriteRule ^Home/PrivacyPolicy/?$ /privacy-policy/ [R=301,L,NC]
+RewriteRule ^Home/TermsOfUse/?$ / [R=301,L,NC]
+RewriteRule ^Home(/Index)?/?$ / [R=301,L,NC]
+RewriteRule ^About/?$ /about/ [R=301,L]
+RewriteRule ^Contact/?$ /contact/ [R=301,L]
+RewriteRule ^FAQ/?$ /faq/ [R=301,L]
+RewriteRule ^Gallery/?$ /gallery/ [R=301,L]
+RewriteRule ^Reviews/?$ /reviews/ [R=301,L]
+RewriteRule ^(Services|News)/?$ / [R=301,L]
+# Missing trailing slash on a page folder: /roof-repair -> /roof-repair/
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ /$1/ [R=301,L]
 
 # Private folders and files: act like they don't exist
 RedirectMatch 404 ^/(inc|data|build|\.git)(/|$)
@@ -17,6 +40,11 @@ RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 <IfModule mod_headers.c>
+  # Uncomment once HTTPS is working everywhere:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  <FilesMatch "^(lead\.php|404\.html)$">
+    Header set X-Robots-Tag "noindex"
+  </FilesMatch>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
@@ -27,6 +55,9 @@ RewriteRule ^ /%1 [R=301,L]
   ExpiresActive On
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType application/manifest+json "access plus 1 week"
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
   ExpiresByType text/html "access plus 0 seconds"

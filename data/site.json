@@ -22,5 +22,8 @@
     "facebook_url": "",
     "yelp_url": "",
     "notice_text": "",
-    "notice_link": ""
+    "notice_link": "",
+    "ga4_id": "",
+    "gsc_verification": "",
+    "bing_verification": ""
 }

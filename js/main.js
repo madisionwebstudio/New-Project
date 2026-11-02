@@ -123,4 +123,11 @@
         });
     });
   });
+  // Analytics: count call and text taps (only when Google Analytics is set up in the admin)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="sms:"]');
+    if (!a || typeof window.gtag !== 'function') return;
+    var isCall = a.getAttribute('href').indexOf('tel:') === 0;
+    window.gtag('event', isCall ? 'click_to_call' : 'click_to_text', { link_page: location.pathname });
+  });
 })();

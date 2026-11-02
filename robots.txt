@@ -1,6 +1,7 @@
+# Hardtland Home Improvement
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /thank-you/
+Disallow: /lead.php
 
 Sitemap: https://www.hardtlandhomeimprovement.com/sitemap.xml

@@ -5,7 +5,7 @@ TODO before launch:
   * Replace each town's 3 projects with REAL JOBS FROM TOM (photo + one line).
   * Double-check the drive distances from 5821 Thrush Ln.
 """
-from common import (esc, icon, url, render, breadcrumbs, breadcrumb_ld, page_hero,
+from common import (DOMAIN, BUSINESS_ID, esc, icon, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                     faq_section, faq_ld, project_grid, form_band, map_embed,
                     review_cards, SERVICES, SERVICE_ICON, TOWNS, TEL, PHONE)
 
@@ -243,7 +243,24 @@ def town_page(slug):
   </section>""",
         form_band(path, heading=f"Free Roof Inspection in {name}"),
     ])
-    schemas = [faq_ld(d["faqs"]), breadcrumb_ld(trail)]
+    local_service = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"Roofing in {name}, WI",
+        "serviceType": "Roofing contractor",
+        "description": d["desc"],
+        "url": DOMAIN + path,
+        "provider": {"@id": BUSINESS_ID},
+        "areaServed": {"@type": "City", "name": f"{name}, WI",
+                       "containedInPlace": {"@type": "State", "name": "Wisconsin"}},
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": f"Roofing and exterior services in {name}",
+            "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": n,
+                                 "url": DOMAIN + url(s)}} for s, n in SERVICES],
+        },
+    }
+    schemas = [local_service, faq_ld(d["faqs"]), breadcrumb_ld(trail)]
     return path, render(path, d["title"], d["desc"], main, schemas=schemas)
 
 

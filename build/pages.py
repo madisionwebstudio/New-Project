@@ -1,9 +1,11 @@
 """Homepage and supporting pages: service areas, reviews, about, gallery,
 FAQ, contact, privacy, accessibility and 404."""
+import html
 import json
 import os
+import re
 
-from common import (RATING, REVIEW_COUNT, ld, esc, icon, stars, url, render, breadcrumbs, breadcrumb_ld, page_hero,
+from common import (DOMAIN, BUSINESS_ID, RATING, REVIEW_COUNT, ld, esc, icon, stars, url, render, breadcrumbs, breadcrumb_ld, page_hero,
                     faq_section, faq_ld, review_cards, project_grid, form_band, form,
                     map_embed, photo, SERVICES, SERVICE_ICON, TOWNS, TEL, SMS, PHONE,
                     EMAIL, HOURS, GOOGLE_REVIEWS)
@@ -25,6 +27,29 @@ def simple_section(inner, band=False, h_id=None):
 # ==========================================================================
 # HOME
 # ==========================================================================
+WEBSITE_LD = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": DOMAIN + "/#website",
+    "url": DOMAIN + "/",
+    "name": "Hardtland Home Improvement",
+    "alternateName": "Hardtland",
+    "inLanguage": "en-US",
+    "publisher": {"@id": BUSINESS_ID},
+}
+
+TOM_LD = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": DOMAIN + "/about/#tom",
+    "name": "Tom Degenhardt",
+    "jobTitle": "Owner",
+    "worksFor": {"@id": BUSINESS_ID},
+    "url": DOMAIN + "/about/",
+    "knowsAbout": ["Roof replacement", "Roof repair", "Storm and hail damage", "Siding", "Gutters",
+                   "Windows and doors", "Roofing insurance claims"],
+}
+
 HOME_PRELOAD = (
     '<link rel="preload" as="image" type="image/webp" '
     'href="/img/hero-roof-replacement-verona-1600.webp" '
@@ -44,7 +69,7 @@ def home():
     return "/", render(
         "/", "Roofing Contractor Madison & Verona WI | Hardtland Since 1972",
         "Family roofer serving Madison, Verona and Dane County since 1972. CertainTeed Master Shingler. Free roof inspections and insurance claim help.",
-        main, schemas=[faq], preload_html=HOME_PRELOAD, head_html=business,
+        main, schemas=[WEBSITE_LD, faq], preload_html=HOME_PRELOAD, head_html=business,
         og_title="Madison & Verona's Roofer Since 1972 | Hardtland Home Improvement")
 
 
@@ -244,7 +269,8 @@ def about():
     ])
     return path, render(path, "About Tom Degenhardt & Hardtland | Roofing Since 1972",
                         "Owner-run since 1972. Meet Tom Degenhardt, a CertainTeed Master Shingler serving Madison and Verona.",
-                        main, schemas=[breadcrumb_ld(trail)])
+                        main, schemas=[TOM_LD, breadcrumb_ld(trail)],
+                        page_extra={"mainEntity": {"@id": DOMAIN + "/about/#tom"}})
 
 
 # ==========================================================================
@@ -303,7 +329,10 @@ def gallery():
     ])
     return path, render(path, "Roofing & Siding Projects | Hardtland Gallery",
                         "Real roofs and siding we've installed across Madison, Verona and Dane County.",
-                        main, schemas=[breadcrumb_ld(trail)])
+                        main, schemas=[breadcrumb_ld(trail)],
+                        page_extra={"image": [{"@type": "ImageObject", "contentUrl": f"{DOMAIN}/img/{f}",
+                                               "caption": html.unescape(re.sub("<[^>]+>", "", cap))}
+                                              for _, f, _, cap in GALLERY]})
 
 
 # ==========================================================================
@@ -454,8 +483,9 @@ def privacy():
       <p>When you fill out our inspection form, we collect your name, phone number, address and the service you're interested in. If you call, text or email us, we receive the information you share.</p>
       <h2>How we use it</h2>
       <p>We use your information only to contact you about your project, schedule inspections and provide estimates and service. We do not sell your information.</p>
-      <h2>Website data</h2>
-      <p>Like most websites, our hosting provider may log basic technical data such as your browser type and pages visited. If we add analytics tools, we'll update this page to explain them.</p>
+      <h2>Website data and analytics</h2>
+      <p>Like most websites, our hosting provider may log basic technical data such as your browser type and pages visited.</p>
+      <p>We may use Google Analytics to understand how people find and use our site, such as which pages are visited and when someone taps to call or text us. Google Analytics uses cookies and collects data under <a href="https://policies.google.com/privacy" rel="noopener">Google's privacy policy</a>. You can opt out with <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google's opt-out browser add-on</a>.</p>
       <h2>Embedded maps</h2>
       <p>Some pages include Google Maps. Google may collect data when you view or use these maps, under Google's own privacy policy.</p>
       <h2>Contact us</h2>

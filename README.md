@@ -46,6 +46,32 @@ Protections: hashed password, login lock after 5 failed tries (15 min),
 CSRF tokens on every form, 8-hour idle logout, honeypot + timing check + rate
 limit on the public form, and no lead data in the public pages.
 
+## SEO built in
+
+| Area | What's done |
+| --- | --- |
+| Pages | 22 indexable pages, one keyword each (homepage, 9 services, 6 towns, 6 supporting), unique titles under 60 characters and descriptions under 155 |
+| On-page | One H1 per page, keyword in H1, title, first paragraph and an H2; breadcrumbs; internal links (each service links to 2 services + 3 towns, each town links to all services) |
+| Structured data | `RoofingContractor` (hours, rating, services, map, contact point), `WebSite`, a typed `WebPage` on every page, `Service` (each service + each town), `FAQPage`, `BreadcrumbList`, `Person` (Tom), `ImageGallery` |
+| Sharing | Open Graph + Twitter/X cards with a 1200x630 share image (`img/og-hardtland.jpg`) |
+| Crawling | `sitemap.xml` with images and real per-page dates, `robots.txt`, `llms.txt` for AI assistants, `noindex` on thank-you/404/admin/form handler |
+| Speed | Static HTML, hero image preloaded, other images lazy-loaded with width/height, fonts load without blocking, caching + compression in `.htaccess` |
+| Redirects | Old site URLs (`/Accessibility`, `/Home/PrivacyPolicy`, `/About`...) 301 to the new pages; `/page` -> `/page/`; `index.html` -> clean URL; http/bare domain -> `https://www.` (uncomment once SSL is live) |
+| Local | Same name, address and phone everywhere (edited in one place in the admin), geo tags, town pages, service-area schema |
+| Tracking | Admin > Business info: Google Analytics 4 ID, Search Console and Bing verification codes. Calls, texts and form requests are tracked as GA4 events |
+
+`build/sitemap-state.json` remembers each page's last real change so
+`lastmod` dates stay honest. Commit it with the pages.
+
+### After launch (off-site, not code)
+
+1. Search Console + Bing Webmaster Tools: verify (paste codes in the admin), submit `/sitemap.xml`.
+2. Google Business Profile: name "Hardtland Home Improvement, Inc.", real hours (same as admin), website link with UTM tags, all services and towns.
+3. Citations: make name/address/phone match exactly on Yelp, Facebook, BBB, Angi, Bing Places, Apple Business Connect, Nextdoor, CertainTeed and Owens Corning contractor finders.
+4. Reviews: ask every customer (text template + QR code on invoices). Update the rating in the admin as it grows.
+5. Swap the placeholder photos for real job photos (biggest win for image search and trust).
+6. Phase 2 articles from the plan: roof cost in Madison, roof lifespan in Wisconsin, repair vs replace, hail claims step by step, gutter guards, best time to replace.
+
 ## Editing pages
 
 Pages are generated from shared templates so the header, footer and form stay
@@ -91,5 +117,6 @@ Quick list of all placeholder names: `ls img/`
 - [ ] Logo file, CertainTeed and Owens Corning badge files
 - [ ] Full review text from Google (currently excerpts) in `build/common.py`
 - [ ] Confirm domain (`DOMAIN` in `build/common.py`) and set up 301s from old URLs
-- [ ] Open Graph image `/img/og-hardtland.jpg` (1200x630)
+- [ ] Optional: replace `/img/og-hardtland.jpg` with a branded version using a real job photo (1200x630)
+- [ ] Uncomment the HTTPS + www redirect in `.htaccess` once SSL is live
 - [ ] Have the privacy policy reviewed

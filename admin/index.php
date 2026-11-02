@@ -11,6 +11,7 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/inc/app.php';
 
 header('X-Frame-Options: DENY');
+header('X-Robots-Tag: noindex, nofollow');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: same-origin');
 header('Cache-Control: no-store');
@@ -478,6 +479,13 @@ function view_business(): never
             $new[$k] = post($k, 400);
         }
         $new['notice_text'] = one_line(post('notice_text', 160));
+        $new['ga4_id'] = strtoupper(post('ga4_id', 20));
+        $new['gsc_verification'] = post('gsc_verification', 100);
+        $new['bing_verification'] = post('bing_verification', 100);
+        // People often paste the whole <meta ...> tag: keep just the code.
+        foreach (['gsc_verification', 'bing_verification'] as $k) {
+            if (preg_match('/content=["\']([^"\']+)["\']/', $new[$k], $mm)) $new[$k] = $mm[1];
+        }
         foreach (DAY_SCHEMA as $k => $label) {
             $open = post("open_$k", 5);
             $close = post("close_$k", 5);
@@ -502,6 +510,10 @@ function view_business(): never
         foreach (['google_review_url' => 'Google review link', 'google_profile_url' => 'Google profile link',
                   'facebook_url' => 'Facebook link', 'yelp_url' => 'Yelp link'] as $k => $label) {
             if (!valid_url($new[$k])) $errors[] = "$label must start with https://";
+        }
+        if ($new['ga4_id'] !== '' && !preg_match('/^G-[A-Z0-9]{4,15}$/', $new['ga4_id'])) $errors[] = 'Google Analytics ID looks like G-ABC123XYZ.';
+        foreach (['gsc_verification' => 'Google Search Console code', 'bing_verification' => 'Bing code'] as $k => $label) {
+            if ($new[$k] !== '' && !preg_match('/^[A-Za-z0-9_\-]{10,100}$/', $new[$k])) $errors[] = "$label: paste just the code (letters, numbers, - and _).";
         }
         if ($new['google_review_url'] === '') $errors[] = 'Google review link is required (it is used for the review buttons).';
         if ($new['notice_link'] !== '' && !valid_url($new['notice_link']) && !preg_match('#^/[a-z0-9\-/]*$#', $new['notice_link'])) {
@@ -582,6 +594,12 @@ function view_business(): never
         . '<label>Link <small>(optional, e.g. /storm-hail-damage/)</small><input name="notice_link" value="' . $f('notice_link') . '"></label>'
         . '</section>'
 
+        . '<section class="card"><h2>Google &amp; Bing <small class="muted">(SEO tracking)</small></h2><p class="muted">Paste these once and they are added to every page. Leave blank if not set up yet.</p>'
+        . '<label>Google Analytics 4 measurement ID <small>(G-...)</small><input name="ga4_id" placeholder="G-ABC123XYZ" value="' . $f('ga4_id') . '"></label>'
+        . '<label>Google Search Console verification code <small>(from the "HTML tag" option)</small><input name="gsc_verification" value="' . $f('gsc_verification') . '"></label>'
+        . '<label>Bing Webmaster Tools verification code<input name="bing_verification" value="' . $f('bing_verification') . '"></label>'
+        . '<p class="muted">With Analytics on, calls, texts and form requests are tracked as events automatically.</p>'
+        . '</section>'
         . '<div class="savebar"><button class="btn btn--big" type="submit">Save and update website</button></div>'
         . '</form>'
         . '<section class="card"><h2>System check</h2><ul class="checks">' . $checks . '</ul></section>';

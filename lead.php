@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/inc/app.php';
 
+header('X-Robots-Tag: noindex, nofollow');
 $isAjax = ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'fetch';
 
 function lead_respond(bool $ok, string $error = '', string $name = ''): void
