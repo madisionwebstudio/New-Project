@@ -124,7 +124,8 @@ old (608) 845-9100 number.
 - [ ] Real hours: enter in the admin under Business info
 - [ ] Origin story on the About page (`[CONFIRMED STORY FROM TOM]` in `build/pages.py`)
 - [ ] Set `ADMIN_SETUP_KEY`, create the admin login, set up SMTP and send a test email
-- [ ] Google Business Profile link and the direct Google review link: admin, Business info (Facebook + Yelp done)
+- [ ] Confirm the Google Place ID `ChIJ9YIRPSixB4gRX6Hj33m4fFA` is Tom's listing (taken from a public directory; review buttons use it)
+- [ ] Check for a duplicate old Google listing, "The Hardtland Company, Inc." near Verona (linked from the old site); merge or remove it
 - [ ] CertainTeed and Owens Corning badge files (logo is in `img/hardtland-logo.png`)
 - [ ] Full review text from Google (currently excerpts) in `build/common.py`
 - [ ] Confirm domain (`DOMAIN` in `build/common.py`) and set up 301s from old URLs

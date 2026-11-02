@@ -7,7 +7,7 @@
     "zip": "53711",
     "rating": "4.7",
     "review_count": "32",
-    "google_review_url": "https://www.google.com/maps/search/?api=1&query=Hardtland+Home+Improvement+Inc+5821+Thrush+Ln+Madison+WI",
+    "google_review_url": "https://search.google.com/local/writereview?placeid=ChIJ9YIRPSixB4gRX6Hj33m4fFA",
     "hours": {
         "mon": null,
         "tue": null,
@@ -18,7 +18,7 @@
         "sun": null
     },
     "hours_note": "[REAL HOURS FROM TOM]",
-    "google_profile_url": "",
+    "google_profile_url": "https://www.google.com/maps/place/?q=place_id:ChIJ9YIRPSixB4gRX6Hj33m4fFA",
     "facebook_url": "https://www.facebook.com/HardtlandHomeImprovementInc",
     "yelp_url": "https://www.yelp.com/biz/hardtland-home-improvement-l-l-c-tom-degenhardt-verona-4",
     "notice_text": "",
