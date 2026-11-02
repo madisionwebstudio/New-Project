@@ -1,35 +1,39 @@
 # Hardtland Home Improvement website
 
-The whole website is in **`hardtlandhomeimprovement/`**. Netlify publishes that
-folder as-is (settings in `netlify.toml`); there is no build step on Netlify.
+This repo holds **two copies** of the same site, built from one source:
 
-## Deploy on Netlify
+| Where | What it's for | Form | Search engines |
+|---|---|---|---|
+| **repo root** (this folder) | **Netlify preview** for the client, now | Netlify Forms | blocked (`noindex`, `robots.txt`) |
+| **`hardtlandhomeimprovement/`** | **Real domain** on a PHP host, once the client agrees | `lead.php` + `/admin/` panel | open (sitemap, schema, SEO) |
 
-1. Netlify > **Add new site** > **Import an existing project** > GitHub > this repo.
-2. Branch: the one with this code. Netlify reads `netlify.toml`, so leave
-   build command empty and publish directory as `hardtlandhomeimprovement`.
-3. **Domain:** add `www.hardtlandhomeimprovement.com` as the primary domain.
-   Netlify turns on HTTPS and redirects the bare domain to `www` for you.
-4. **Form emails:** Site configuration > **Forms** > enable form detection, then
-   **Form notifications** > Add notification > Email > form `free-inspection`
-   > send to `tomd@tds.net`. Every request also shows under **Forms** in the
-   Netlify dashboard, with spam filtering.
-5. After the first deploy, send a test request from the live site and check
-   that it appears under Forms and in Tom's inbox.
+Edit content only in `hardtlandhomeimprovement/build/`, then rebuild both:
 
-## What does not run on Netlify
+```
+python3 hardtlandhomeimprovement/build/build.py           # both copies
+python3 hardtlandhomeimprovement/build/build.py netlify   # just the preview
+python3 hardtlandhomeimprovement/build/build.py php       # just the real-domain folder
+```
 
-Netlify hosts static files only, so the PHP parts are kept in the folder but
-blocked from the web there (`/admin/`, `/lead.php`, `/inc/`, `/data/`):
+(Needs Python 3 with Pillow, and PHP 8.1+.) Commit, and Netlify redeploys.
 
-- The `/admin/` panel (leads list, editing hours/phone/rating, SMTP settings).
-- `lead.php` (on Netlify, Netlify Forms handles the form instead).
+## Netlify preview setup
 
-To change hours, phone, rating or links on Netlify: edit
-`hardtlandhomeimprovement/data/site.json`, run
-`python3 hardtlandhomeimprovement/build/build.py` (needs Python + PHP), commit,
-and Netlify redeploys. If Tom should edit these himself in a browser, either
-host on a PHP web host (set `HOSTING = "php"` in `build/common.py` and rebuild),
-or add a Git-based CMS on Netlify.
+1. Netlify > **Add new site** > **Import an existing project** > GitHub > this repo
+   and branch. `netlify.toml` sets everything: publish the repo root, no build command.
+2. Use the free `*.netlify.app` address (rename it under Site configuration if you like).
+   Don't point the real domain here; the preview is `noindex` on purpose.
+3. **Form emails:** Site configuration > **Forms** > enable form detection, then
+   **Form notifications** > Email > form `free-inspection` > `tomd@tds.net`.
+   Requests also show under **Forms** in the Netlify dashboard.
+4. Send a test request from the preview and check Forms + the inbox.
 
-Full details: `hardtlandhomeimprovement/README.md`.
+The `/admin/` panel does not exist on the preview (Netlify can't run PHP).
+
+## Going live on the real domain
+
+Upload the **contents of `hardtlandhomeimprovement/`** (everything except its
+`build/` folder) to a PHP web host for www.hardtlandhomeimprovement.com, then
+follow "First-time setup" in `hardtlandhomeimprovement/README.md` (admin login,
+email/SMTP, real hours). That copy is fully indexable, with the sitemap,
+redirects and admin panel.

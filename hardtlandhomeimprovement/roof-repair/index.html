@@ -534,9 +534,8 @@
       <div class="form-card">
         <h3>Book a Free Inspection</h3>
         <p>Takes about 30 seconds.</p>
-        <!-- Netlify Forms: submissions appear in the Netlify dashboard (Forms). -->
-        <form name="free-inspection" action="/thank-you/" method="post" data-lead-form data-netlify="true" netlify-honeypot="website">
-          <input type="hidden" name="form-name" value="free-inspection">
+        <!-- Saved to the admin panel (/admin/) and emailed. See lead.php. -->
+        <form action="/lead.php" method="post" data-lead-form>
           <input type="hidden" name="source_page" value="/roof-repair/">
           <input type="hidden" name="ts" value="">
           <div class="field">

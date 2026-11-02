@@ -4,20 +4,19 @@ Static HTML site: one shared stylesheet (`css/styles.css`), one small script
 (`js/main.js`), no framework. Every page is its own folder with an
 `index.html`, so URLs are clean (`/roof-repair/`, `/verona-wi/`, ...).
 
-## Hosting: Netlify (current) or a PHP host
+## Two copies: real domain (this folder) and Netlify preview (repo root)
 
-`HOSTING` in `build/common.py` picks how the inspection form works:
+`build/build.py` writes this site twice from the same source:
 
-- **`"netlify"` (current):** forms use Netlify Forms. Requests appear in the
-  Netlify dashboard and are emailed via Netlify form notifications. The PHP
-  admin below does **not** run on Netlify (it is blocked there by
-  `netlify.toml` in the repo root). See the root `README.md` for Netlify setup.
-- **`"php"`:** forms post to `lead.php`, and everything in the admin section
-  below works. Use this on a PHP web host (Apache/LiteSpeed).
+- **This folder** (`HOSTING = "php"`): the real-domain site. Forms post to
+  `lead.php`, leads appear in `/admin/` and are emailed. Fully indexable.
+- **Repo root** (`HOSTING = "netlify"`): the client preview on Netlify. Forms use
+  Netlify Forms; every page is `noindex`; no admin, sitemap or PHP files.
 
-Rebuild after changing it: `python3 build/build.py` (run from this folder or anywhere).
+Run `python3 build/build.py` to rebuild both (or add `php` / `netlify` for one).
+See the root `README.md` for the Netlify steps.
 
-## Admin panel (`/admin/`, PHP hosting only)
+## Admin panel (`/admin/`, real-domain copy only)
 
 Tom logs in at `https://www.hardtlandhomeimprovement.com/admin/` (works on a phone).
 

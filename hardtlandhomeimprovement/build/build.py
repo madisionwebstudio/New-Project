@@ -13,7 +13,10 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+ROOT = os.path.dirname(HERE)          # the real-domain (PHP) site: hardtlandhomeimprovement/
+REPO = os.path.dirname(ROOT)           # repo root: the Netlify preview copy
+OUT = ROOT                             # where pages are written for the current target
+TARGET = "php"
 sys.path.insert(0, HERE)
 
 import common  # noqa: E402
@@ -38,9 +41,9 @@ def fill_tokens(html):
 def write_page(path, html):
     html = fill_tokens(html)
     if path.endswith(".html"):
-        out = os.path.join(ROOT, path.lstrip("/"))
+        out = os.path.join(OUT, path.lstrip("/"))
     else:
-        out = os.path.join(ROOT, path.strip("/"), "index.html")
+        out = os.path.join(OUT, path.strip("/"), "index.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         f.write(html)
@@ -83,7 +86,6 @@ def make_placeholders(htmls):
         made.append(name)
     return made
 
-STATE_FILE = os.path.join(HERE, "sitemap-state.json")
 PRIORITY = {"/": "1.0"}
 
 
@@ -103,8 +105,9 @@ def write_sitemap(built):
     import json
     from xml.sax.saxutils import escape
     today = datetime.date.today().isoformat()
+    state_file = os.path.join(HERE, "sitemap-state.json" if TARGET == "php" else "sitemap-state-netlify.json")
     try:
-        state = json.load(open(STATE_FILE))
+        state = json.load(open(state_file))
     except (OSError, ValueError):
         state = {}
     order = ["/"] + [common.url(s) for s, _ in common.SERVICES] + [common.url(s) for s, _ in common.TOWNS]
@@ -126,18 +129,24 @@ def write_sitemap(built):
         prio = PRIORITY.get(path, "0.8" if path in order else "0.6")
         entries.append(f"  <url>\n    <loc>{escape(common.DOMAIN + path)}</loc>\n    <lastmod>{lastmod}</lastmod>"
                        f"\n    <priority>{prio}</priority>{img_xml}\n  </url>")
-    with open(os.path.join(ROOT, "sitemap.xml"), "w") as f:
+    with open(os.path.join(OUT, "sitemap.xml"), "w") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
                 '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
                 + "\n".join(entries) + "\n</urlset>\n")
-    with open(STATE_FILE, "w") as f:
+    with open(state_file, "w") as f:
         json.dump(new_state, f, indent=1, sort_keys=True)
     print(f"sitemap.xml: {len(entries)} pages")
 
 
 def write_robots():
-    with open(os.path.join(ROOT, "robots.txt"), "w") as f:
+    if TARGET == "netlify":
+        # Preview copy: keep it out of search engines so it never competes with the real domain.
+        with open(os.path.join(OUT, "robots.txt"), "w") as f:
+            f.write("# Netlify preview of the Hardtland site. Not for search engines.\n"
+                    "User-agent: *\nDisallow: /\n")
+        return
+    with open(os.path.join(OUT, "robots.txt"), "w") as f:
         f.write("# Hardtland Home Improvement\n"
                 "User-agent: *\n"
                 "Allow: /\n"
@@ -175,7 +184,7 @@ def write_llms(built):
             desc = meta(h, r'name="description" content="([^"]*)"')
             lines.append(f"- [{re.sub('<[^>]+>', '', name)}]({common.DOMAIN}{p}): {desc}")
         lines.append("")
-    with open(os.path.join(ROOT, "llms.txt"), "w") as f:
+    with open(os.path.join(OUT, "llms.txt"), "w") as f:
         f.write("\n".join(lines))
 
 
@@ -231,29 +240,63 @@ def make_brand_images():
                 '  "theme_color": "#1F2328",\n  "background_color": "#FAF8F5",\n  "display": "browser"\n}\n')
 
 
-def main():
+# Static files the Netlify copy needs from the main site folder.
+SHARED = ["css", "js", "img", "favicon.svg", "favicon-48.png", "apple-touch-icon.png",
+          "icon-192.png", "icon-512.png", "site.webmanifest"]
+
+
+def build(target):
+    global OUT, TARGET
+    import shutil
+    import subprocess
+    TARGET = target
+    OUT = ROOT if target == "php" else REPO
+    common.HOSTING = target
+    print(f"== {target}: {OUT}")
     built = []
     for group in (pages.PAGES, services.PAGES, towns.PAGES):
         for fn in group:
             path, html = fn()
+            if target == "netlify":
+                # never let the preview be indexed (meta + header in netlify.toml)
+                html = re.sub(r'<meta name="robots" content="[^"]*">',
+                              '<meta name="robots" content="noindex, nofollow">', html, count=1)
             write_page(path, html)
             built.append((path, html))
-            print(f"  {path}")
 
-    write_sitemap(built)
     write_robots()
-    write_llms(built)
-    make_brand_images()
-
-    made = make_placeholders([h for _, h in built])
-    print(f"Built {len(built)} pages, {len(made)} new placeholder images.")
+    if target == "php":          # sitemap + llms.txt only for the indexable real-domain site
+        write_sitemap(built)
+        write_llms(built)
+    if target == "php":
+        make_brand_images()
+        made = make_placeholders([h for _, h in built])
+        print(f"Built {len(built)} pages, {len(made)} new placeholder images.")
+    else:
+        for name in SHARED:
+            src, dst = os.path.join(ROOT, name), os.path.join(REPO, name)
+            if os.path.isdir(src):
+                shutil.copytree(src, dst, dirs_exist_ok=True)
+            else:
+                shutil.copy2(src, dst)
+        print(f"Built {len(built)} pages and copied shared files.")
 
     # Apply the admin-editable business info (data/site.json) to the new pages.
-    import subprocess
     try:
-        subprocess.run(["php", os.path.join(ROOT, "inc", "publish-cli.php")], check=True)
+        subprocess.run(["php", os.path.join(ROOT, "inc", "publish-cli.php"), OUT], check=True)
     except (OSError, subprocess.CalledProcessError) as e:
         print(f"WARNING: could not run php inc/publish-cli.php ({e}). Pages show seed values.")
+
+
+def main():
+    """python3 build/build.py            -> both copies
+       python3 build/build.py php        -> only hardtlandhomeimprovement/ (real domain)
+       python3 build/build.py netlify    -> only the repo-root Netlify preview"""
+    targets = sys.argv[1:] or ["php", "netlify"]
+    for t in targets:
+        if t not in ("php", "netlify"):
+            sys.exit(f"unknown target {t!r}: use php or netlify")
+        build(t)
 
 
 if __name__ == "__main__":

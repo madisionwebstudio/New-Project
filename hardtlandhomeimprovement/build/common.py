@@ -19,11 +19,11 @@ HOURS = ('<!--biz:hours--><span class="hours"><span class="hours-note">[REAL HOU
          '</span></span><!--/biz:hours-->')
 RATING = "{{RATING}}"      # becomes <!--biz:rating-->4.7<!--/biz:rating--> in the page body
 REVIEW_COUNT = "{{REVIEWS}}"
-# Where the site is hosted:
-#   "netlify" -> forms use Netlify Forms (submissions in the Netlify dashboard,
-#                email alerts set up in Netlify). PHP admin/lead.php don't run there.
-#   "php"     -> forms post to lead.php (saved in the /admin/ panel + emailed).
-HOSTING = "netlify"
+# Set by build.py for each copy it writes:
+#   "php"     -> hardtlandhomeimprovement/ (real domain): forms post to lead.php,
+#                saved in the /admin/ panel and emailed.
+#   "netlify" -> repo root (preview): forms use Netlify Forms.
+HOSTING = "php"
 FORM_ACTION = "/lead.php"
 NETLIFY_FORM = "free-inspection"
 GOOGLE_REVIEWS = ("https://www.google.com/maps/search/?api=1&amp;query="

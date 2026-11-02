@@ -537,12 +537,14 @@ function replacement_pairs(array $old, array $new): array
     return $pairs;
 }
 
-function site_html_files(): array
+function site_html_files(?string $root = null): array
 {
+    $root = $root ?? SITE_ROOT;
     $skip = ['build', 'data', 'inc', 'admin', '.git', 'node_modules'];
+    if (realpath($root) !== realpath(SITE_ROOT)) $skip[] = basename(SITE_ROOT);   // repo-root preview copy
     $files = [];
     $it = new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator(
-        new RecursiveDirectoryIterator(SITE_ROOT, FilesystemIterator::SKIP_DOTS),
+        new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS),
         function ($f) use ($skip) {
             if ($f->isDir()) return !in_array($f->getFilename(), $skip, true);
             return strtolower($f->getExtension()) === 'html';
@@ -557,13 +559,13 @@ function site_html_files(): array
  * Apply business info to every page. Returns ['changed' => n, 'total' => n, 'errors' => [...]].
  * $old is what the pages currently contain; $new is what they should say.
  */
-function publish_site(array $old, array $new): array
+function publish_site(array $old, array $new, ?string $root = null): array
 {
     $blocks = rendered_blocks($new);
     $pairs = replacement_pairs($old, $new);
     $changed = 0;
     $errors = [];
-    $files = site_html_files();
+    $files = site_html_files($root);
     foreach ($files as $file) {
         $html = (string)file_get_contents($file);
         $orig = $html;
